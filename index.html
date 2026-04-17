@@ -1,0 +1,3015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSS Student Success Hub – St. John's University</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #CC0033;
+    --red-dark: #A8002A;
+    --red-deep: #7A001F;
+    --red-soft: #F9E6EA;
+    --gold: #C8972A;
+    --gold-light: #F5E6C0;
+    --off-white: #FAF9F7;
+    --warm-gray: #F2EFE9;
+    --mid-gray: #8A8480;
+    --dark: #1A1614;
+    --text: #2C2420;
+    --text-light: #5C534E;
+    --border: #E8E2DA;
+    --shadow: rgba(26, 22, 20, 0.08);
+    --shadow-md: rgba(26, 22, 20, 0.14);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── SKIP LINK ── */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 1rem;
+    background: var(--red);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 0 0 8px 8px;
+    font-size: 14px;
+    z-index: 9999;
+    transition: top .2s;
+  }
+  .skip-link:focus { top: 0; }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: var(--dark);
+    padding: 8px 0;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+  .topbar span { color: var(--gold); font-weight: 500; }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--red);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 110% -10%, var(--red-dark) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at -10% 110%, var(--red-deep) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 320px; height: 320px;
+    border: 60px solid rgba(255,255,255,0.04);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .header-inner {
+    position: relative;
+    max-width: 1080px;
+    margin: auto;
+    padding: 56px 24px 52px;
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+
+  .header-logo {
+    flex-shrink: 0;
+    width: 80px; height: 80px;
+    background: white;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--red);
+    font-weight: 400;
+    letter-spacing: -1px;
+    animation: fadeUp .6s ease both;
+  }
+
+  .header-text { animation: fadeUp .6s .1s ease both; }
+
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 8px;
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 5vw, 46px);
+    font-weight: 400;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  header h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  header p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.82);
+    max-width: 500px;
+    font-weight: 300;
+  }
+
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.9);
+    font-weight: 500;
+    backdrop-filter: blur(8px);
+  }
+  .header-badge .dot {
+    width: 7px; height: 7px;
+    background: #4ade80;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(74,222,128,0.3);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(74,222,128,0.3); }
+    50% { box-shadow: 0 0 0 6px rgba(74,222,128,0.1); }
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--dark);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+
+  .nav-inner {
+    max-width: 1080px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 0 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+
+  nav a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    padding: 16px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    position: relative;
+    transition: color .2s;
+  }
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 18px; right: 18px;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform .2s;
+    border-radius: 2px 2px 0 0;
+  }
+  nav a:hover { color: white; }
+  nav a:hover::after { transform: scaleX(1); }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 1080px;
+    margin: auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    padding: 64px 0 32px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 6px;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(24px, 4vw, 34px);
+    font-weight: 400;
+    color: var(--dark);
+    line-height: 1.15;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--red);
+  }
+
+  .section-desc {
+    font-size: 15px;
+    color: var(--text-light);
+    margin-top: 8px;
+    max-width: 520px;
+    font-weight: 300;
+  }
+
+  .section-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--red);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    transition: gap .2s;
+  }
+  .section-link:hover { gap: 9px; }
+
+  /* ── WELCOME BAND ── */
+  .welcome-band {
+    margin-top: 40px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px 44px;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    box-shadow: 0 4px 24px var(--shadow);
+    animation: fadeUp .7s .2s ease both;
+    position: relative;
+    overflow: hidden;
+  }
+  .welcome-band::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 5px;
+    background: linear-gradient(to bottom, var(--red), var(--gold));
+    border-radius: 20px 0 0 20px;
+  }
+
+  .welcome-icon {
+    font-size: 48px;
+    flex-shrink: 0;
+  }
+
+  .welcome-band h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: var(--dark);
+  }
+
+  .welcome-band p {
+    font-size: 15px;
+    color: var(--text-light);
+    font-weight: 300;
+  }
+
+  .welcome-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--red);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* ── PROGRAM GRID ── */
+  .program-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+  }
+
+  .program-tile {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+    cursor: default;
+    animation: fadeUp .5s ease both;
+  }
+  .program-tile:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px var(--shadow-md);
+    border-color: var(--red);
+  }
+
+  .tile-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .tile-red { background: var(--red-soft); }
+  .tile-gold { background: var(--gold-light); }
+  .tile-green { background: #E6F4EA; }
+  .tile-blue { background: #E8F0FC; }
+  .tile-purple { background: #F0E8FC; }
+
+  .tile-body h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 3px;
+  }
+
+  .tile-body p {
+    font-size: 12px;
+    color: var(--text-light);
+    font-weight: 300;
+    line-height: 1.4;
+  }
+
+  /* ── GUIDE CARDS ── */
+  .guide-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .tab-btn {
+    padding: 8px 18px;
+    border-radius: 100px;
+    border: 1.5px solid var(--border);
+    background: white;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .tab-btn:hover, .tab-btn.active {
+    background: var(--red);
+    border-color: var(--red);
+    color: white;
+  }
+
+  .guide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .guide-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+    animation: fadeUp .5s ease both;
+  }
+  .guide-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px var(--shadow-md);
+  }
+
+  .guide-card-top {
+    height: 6px;
+    background: linear-gradient(to right, var(--red), var(--gold));
+  }
+  .guide-card-top.career { background: linear-gradient(to right, #CC0033, #E87040); }
+  .guide-card-top.finance { background: linear-gradient(to right, #C8972A, #E8C040); }
+  .guide-card-top.academic { background: linear-gradient(to right, #1A6B45, #38A86E); }
+
+  .guide-card-body {
+    padding: 20px;
+  }
+
+  .guide-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 10px;
+  }
+  .tag-career { background: var(--red-soft); color: var(--red-dark); }
+  .tag-finance { background: var(--gold-light); color: #7A5A10; }
+  .tag-academic { background: #E6F4EA; color: #1A6B45; }
+
+  .guide-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+
+  .guide-card p {
+    font-size: 13px;
+    color: var(--text-light);
+    font-weight: 300;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .btn-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    background: var(--dark);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background .2s, transform .15s;
+  }
+  .btn-sm:hover {
+    background: var(--red);
+    transform: translateX(2px);
+  }
+
+  /* ── OPPORTUNITIES ── */
+  .opp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .opp-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: transform .2s, box-shadow .2s;
+    animation: fadeUp .5s ease both;
+  }
+  .opp-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px var(--shadow-md);
+  }
+
+  .opp-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .opp-initials {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--red);
+    color: white;
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-weight: 400;
+  }
+
+  .opp-badges {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 100px;
+    letter-spacing: 0.04em;
+  }
+  .badge-red { background: var(--red-soft); color: var(--red-dark); }
+  .badge-gold { background: var(--gold-light); color: #7A5A10; }
+  .badge-green { background: #E6F4EA; color: #1A6B45; }
+  .badge-blue { background: #E8F0FC; color: #1A3A8F; }
+
+  .opp-card h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 0;
+  }
+
+  .opp-card p {
+    font-size: 13px;
+    color: var(--text-light);
+    font-weight: 300;
+    line-height: 1.55;
+    flex: 1;
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 18px;
+    border: 1.5px solid var(--red);
+    color: var(--red);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .2s;
+    align-self: flex-start;
+  }
+  .btn-outline:hover {
+    background: var(--red);
+    color: white;
+  }
+
+  /* ── NEWSLETTER ARCHIVE ── */
+  .newsletter-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  .newsletter-row {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+    animation: fadeUp .4s ease both;
+  }
+  .newsletter-row:hover {
+    transform: translateX(4px);
+    box-shadow: 0 6px 20px var(--shadow);
+    border-color: var(--red);
+  }
+
+  .nl-date {
+    background: var(--red);
+    color: white;
+    border-radius: 10px;
+    width: 52px;
+    text-align: center;
+    padding: 8px 4px;
+    flex-shrink: 0;
+  }
+  .nl-date .month {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+  .nl-date .year {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .nl-info { flex: 1; }
+  .nl-info h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 3px;
+  }
+  .nl-info p {
+    font-size: 12px;
+    color: var(--text-light);
+    font-weight: 300;
+  }
+
+  .nl-tags {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  .nl-action a {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--red);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    transition: gap .2s;
+  }
+  .nl-action a:hover { gap: 8px; }
+
+  /* ── SPOTLIGHT ── */
+  .spotlight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .spotlight-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+    animation: fadeUp .5s ease both;
+  }
+  .spotlight-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px var(--shadow-md);
+  }
+
+  .spotlight-banner {
+    height: 80px;
+    display: flex;
+    align-items: flex-end;
+    padding: 14px 20px 0;
+    position: relative;
+  }
+  .spotlight-banner.r1 { background: linear-gradient(135deg, var(--red-deep), var(--red)); }
+  .spotlight-banner.r2 { background: linear-gradient(135deg, #7A5A10, var(--gold)); }
+  .spotlight-banner.r3 { background: linear-gradient(135deg, #1A3A8F, #4A80E8); }
+
+  .spotlight-avatar {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    border: 3px solid white;
+    background: rgba(255,255,255,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: white;
+    translate: 0 28px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+
+  .spotlight-body {
+    padding: 40px 20px 22px;
+  }
+
+  .spotlight-body h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 2px;
+  }
+
+  .spotlight-role {
+    font-size: 12px;
+    color: var(--red);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .spotlight-quote {
+    font-size: 13px;
+    color: var(--text-light);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.55;
+    border-left: 3px solid var(--border);
+    padding-left: 12px;
+    margin-bottom: 14px;
+  }
+
+  .spotlight-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .stag {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 100px;
+    background: var(--warm-gray);
+    color: var(--text-light);
+    border: 1px solid var(--border);
+  }
+
+  /* ── CAMPUS RESOURCES ── */
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  .resource-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: transform .2s, box-shadow .2s;
+    text-decoration: none;
+    animation: fadeUp .5s ease both;
+  }
+  .resource-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px var(--shadow-md);
+    border-color: var(--red);
+  }
+
+  .resource-icon {
+    width: 44px; height: 44px;
+    border-radius: 11px;
+    background: var(--red-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .resource-info h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 3px;
+  }
+
+  .resource-info p {
+    font-size: 12px;
+    color: var(--text-light);
+    font-weight: 300;
+    line-height: 1.45;
+  }
+
+  .resource-arrow {
+    margin-left: auto;
+    font-size: 16px;
+    color: var(--mid-gray);
+    align-self: center;
+    transition: transform .2s, color .2s;
+    flex-shrink: 0;
+  }
+  .resource-card:hover .resource-arrow {
+    transform: translateX(3px);
+    color: var(--red);
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 8px 0 0;
+  }
+
+  /* ── CTA BAND ── */
+  .cta-band {
+    background: var(--dark);
+    border-radius: 20px;
+    padding: 48px 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-top: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-band::before {
+    content: '';
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 200px; height: 200px;
+    border: 40px solid rgba(204,0,51,0.12);
+    border-radius: 50%;
+  }
+
+  .cta-band h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: white;
+    margin-bottom: 8px;
+  }
+
+  .cta-band p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    max-width: 400px;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: var(--red);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background .2s, transform .15s;
+    flex-shrink: 0;
+  }
+  .btn-primary:hover {
+    background: var(--red-dark);
+    transform: translateY(-2px);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.5);
+    padding: 40px 24px 32px;
+    margin-top: 0;
+  }
+
+  .footer-inner {
+    max-width: 1080px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .footer-logo {
+    width: 44px; height: 44px;
+    background: var(--red);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: white;
+  }
+
+  .footer-brand-text strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 2px;
+  }
+
+  .footer-brand-text span {
+    font-size: 12px;
+    font-weight: 300;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color .2s;
+    font-weight: 400;
+  }
+  .footer-links a:hover { color: white; }
+
+  .footer-divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 12px;
+  }
+
+  .footer-bottom span {
+    color: var(--gold);
+    opacity: 0.8;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .header-inner { flex-direction: column; align-items: flex-start; gap: 16px; padding: 36px 20px 32px; }
+    .header-logo { width: 64px; height: 64px; font-size: 22px; }
+    .welcome-band { flex-direction: column; padding: 28px 24px; }
+    .cta-band { padding: 32px 28px; }
+    .footer-top { flex-direction: column; }
+    .nl-tags { display: none; }
+    .section-header { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* Stagger animation helpers */
+  .guide-card:nth-child(2) { animation-delay: .05s; }
+  .guide-card:nth-child(3) { animation-delay: .10s; }
+  .guide-card:nth-child(4) { animation-delay: .15s; }
+  .guide-card:nth-child(5) { animation-delay: .20s; }
+  .guide-card:nth-child(6) { animation-delay: .25s; }
+  .opp-card:nth-child(2) { animation-delay: .05s; }
+  .opp-card:nth-child(3) { animation-delay: .10s; }
+  .opp-card:nth-child(4) { animation-delay: .15s; }
+  .program-tile:nth-child(2) { animation-delay: .04s; }
+  .program-tile:nth-child(3) { animation-delay: .08s; }
+  .program-tile:nth-child(4) { animation-delay: .12s; }
+  .program-tile:nth-child(5) { animation-delay: .16s; }
+  .program-tile:nth-child(6) { animation-delay: .20s; }
+  .program-tile:nth-child(7) { animation-delay: .24s; }
+  .program-tile:nth-child(8) { animation-delay: .28s; }
+  .newsletter-row:nth-child(2) { animation-delay: .05s; }
+  .newsletter-row:nth-child(3) { animation-delay: .10s; }
+  .newsletter-row:nth-child(4) { animation-delay: .15s; }
+
+  /* ── PASSWORD GATE ── */
+  #password-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  #password-gate::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 50%, rgba(204,0,51,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 50%, rgba(200,151,42,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .gate-box {
+    position: relative;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    padding: 48px 44px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+    animation: fadeUp .5s ease both;
+  }
+  .gate-logo {
+    width: 64px; height: 64px;
+    background: var(--red);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 24px;
+    color: white;
+    margin: 0 auto 20px;
+    box-shadow: 0 8px 24px rgba(204,0,51,0.4);
+  }
+  .gate-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 8px;
+  }
+  .gate-box h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: white;
+    margin-bottom: 6px;
+  }
+  .gate-box p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+  .gate-input-wrap {
+    position: relative;
+    margin-bottom: 14px;
+  }
+  .gate-input-wrap input {
+    width: 100%;
+    padding: 14px 48px 14px 18px;
+    background: rgba(255,255,255,0.07);
+    border: 1.5px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    color: white;
+    font-size: 15px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    outline: none;
+    transition: border-color .2s;
+    letter-spacing: 0.05em;
+  }
+  .gate-input-wrap input::placeholder { color: rgba(255,255,255,0.25); }
+  .gate-input-wrap input:focus { border-color: var(--red); }
+  .gate-toggle {
+    position: absolute;
+    right: 14px; top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.35);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px;
+    transition: color .2s;
+  }
+  .gate-toggle:hover { color: rgba(255,255,255,0.7); }
+  .gate-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+    letter-spacing: 0.02em;
+  }
+  .gate-btn:hover { background: var(--red-dark); transform: translateY(-1px); }
+  .gate-btn:active { transform: translateY(0); }
+  .gate-error {
+    font-size: 13px;
+    color: #ff6b6b;
+    margin-top: 10px;
+    min-height: 18px;
+    font-weight: 400;
+    display: none;
+  }
+  .gate-error.visible { display: block; }
+  .gate-footer {
+    font-size: 12px;
+    color: rgba(255,255,255,0.2);
+    margin-top: 28px;
+  }
+  body.locked { overflow: hidden; }
+</style>
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<div id="password-gate" role="dialog" aria-modal="true" aria-label="Site access">
+  <div class="gate-box">
+    <div class="gate-logo">S³</div>
+    <p class="gate-eyebrow">Student Support Services · St. John's University</p>
+    <h2>SSS Student Hub</h2>
+    <p>This site is for SSS students only. Enter the program password to continue.</p>
+    <div class="gate-input-wrap">
+      <input type="password" id="gate-pw" placeholder="Enter password" autocomplete="off" />
+      <button class="gate-toggle" onclick="togglePw()" aria-label="Show/hide password">👁</button>
+    </div>
+    <button class="gate-btn" onclick="checkPassword()">Access the Hub →</button>
+    <p class="gate-error" id="gate-error">Incorrect password. Try again.</p>
+    <p class="gate-footer">Don't have the password? Contact the SSS office in Room 103, St. John's Hall.</p>
+  </div>
+</div>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<div class="topbar">
+  TRIO Program · <span>St. John's University</span> · Room 103, St. John's Hall · Jamaica, Queens, NY &nbsp;|&nbsp; 📸 <span>@sssprogram_sju</span>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-logo">S³</div>
+    <div class="header-text">
+      <p class="header-eyebrow">Student Support Services · TRIO Program</p>
+      <h1>Student <em>Success</em> Hub</h1>
+      <p>Guides, resources, newsletters, and opportunities — all in one place for SSS students.</p>
+
+    </div>
+  </div>
+</header>
+
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#about">About SSS</a>
+    <a href="#scholarships">Scholarships</a>
+    <a href="#guides">How-To Guides</a>
+    <a href="#opportunities">Off-Campus Resources</a>
+    <a href="#newsletters">Newsletters</a>
+    <a href="#spotlights">Spotlights</a>
+    <a href="#upcoming-events">Upcoming Events</a>
+    <a href="#past-events">Past Events</a>
+    <a href="#resources">Campus Resources</a>
+  </div>
+  <!-- SEARCH BAR -->
+  <div style="background:#1a1a1a;padding:8px 16px;border-top:1px solid rgba(255,255,255,0.07);">
+    <div style="max-width:1080px;margin:auto;position:relative;" id="search-container">
+      <div style="position:relative;">
+        <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;opacity:0.5;">🔍</span>
+        <input
+          id="site-search"
+          type="text"
+          placeholder="Search resources, guides, events..."
+          autocomplete="off"
+          style="width:100%;padding:9px 12px 9px 36px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:white;font-size:13px;outline:none;box-sizing:border-box;transition:border .2s;"
+          onfocus="showSearchDropdown()"
+          oninput="handleSearchInput(this.value)"
+          onblur="setTimeout(()=>hideSearchDropdown(),200)"
+        />
+      </div>
+      <!-- DROPDOWN -->
+      <div id="search-dropdown" style="display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.2);z-index:999;overflow:hidden;max-height:380px;overflow-y:auto;">
+        <div id="search-suggestions"></div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main id="main-content">
+
+  <!-- WELCOME -->
+  <div class="welcome-band">
+    <div class="welcome-icon">👋</div>
+    <div style="flex:1;">
+      <h2>Welcome to SSS — We're Here for You</h2>
+      <p>Congratulations on being accepted into TRIO Student Support Services. We are excited to support you throughout your academic journey at St. John's University. SSS is here to help you succeed <strong>academically, personally, and professionally.</strong> This hub puts everything in one place — no more digging through old emails.</p>
+      <div class="welcome-stats">
+        <div class="stat"><div class="stat-num">20+</div><div class="stat-label">How-To Guides</div></div>
+        <div class="stat"><div class="stat-num">13</div><div class="stat-label">Opportunities</div></div>
+        <div class="stat"><div class="stat-num">Rm 103</div><div class="stat-label">St. John's Hall</div></div>
+        <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Free to You</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEET THE TEAM -->
+  <section id="meet-the-team">
+    <div class="section-header">
+      <div>
+        <p class="section-label">Our Staff</p>
+        <h2 class="section-title">Meet the <em>Team</em></h2>
+        <p class="section-desc">The people behind SSS — here to support you every step of the way.</p>
+      </div>
+    </div>
+    <hr class="section-divider">
+    <div class="program-grid" id="team-grid" style="margin-top:24px;">
+      <p style="color:var(--text-light);font-size:14px;" id="team-empty">Loading team...</p>
+    </div>
+  </section>
+
+  <!-- ABOUT SSS -->
+  <section id="about">
+    <div class="section-header">
+      <div>
+        <p class="section-label">TRIO Program</p>
+        <h2 class="section-title">What is <em>Student Support Services</em>?</h2>
+        <p class="section-desc">A federally funded TRIO program at St. John's University providing free resources to first-generation and income-eligible students.</p>
+      </div>
+    </div>
+    <hr class="section-divider">
+
+    <div class="program-grid" style="margin-top:24px;">
+      <div class="program-tile">
+        <div class="tile-icon tile-red">📚</div>
+        <div class="tile-body">
+          <h3>Textbook Borrowing</h3>
+          <p>Borrow physical textbooks at no cost for the semester. <a href="textbooks.html" style="color:var(--red);font-weight:600;text-decoration:none;">Browse all 219 books →</a></p>
+        </div>
+      </div>
+      <div class="program-tile">
+        <div class="tile-icon tile-gold">🖊️</div>
+        <div class="tile-body">
+          <h3>Free School Supplies</h3>
+          <p>Notebooks, pens, folders, and more available to SSS students.</p>
+        </div>
+      </div>
+      <div class="program-tile">
+        <div class="tile-icon tile-green">🖨️</div>
+        <div class="tile-body">
+          <h3>Printing & Computer Lab</h3>
+          <p>Access our dedicated computer lab and free printing services.</p>
+          <p style="font-size:13px;margin-top:6px;">📍 St. John's Hall, Room 107A</p>
+        </div>
+      </div>
+      <div class="program-tile">
+        <div class="tile-icon tile-blue">📖</div>
+        <div class="tile-body">
+          <h3>Study Rooms</h3>
+          <p>Reserve private and group study rooms for focused work.</p>
+          <p style="font-size:13px;margin-top:6px;">📍 St. John's Hall, Room 103B</p>
+        </div>
+      </div>
+      <div class="program-tile">
+        <div class="tile-icon tile-purple">🎓</div>
+        <div class="tile-body">
+          <h3>Academic Advisement</h3>
+          <p>One-on-one meetings with a dedicated SSS academic advisor.</p>
+        </div>
+      </div>
+      <div class="program-tile" style="cursor:pointer;" onclick="document.getElementById('grants-modal').classList.add('open')">
+        <div class="tile-icon tile-gold">💰</div>
+        <div class="tile-body">
+          <h3>Tuition Support Grants</h3>
+          <p>Supplemental grant funding for eligible SSS students.</p>
+          <p style="font-size:12px;color:var(--red);font-weight:600;margin-top:6px;">Click here to see requirements & apply →</p>
+        </div>
+      </div>
+      <div class="program-tile">
+        <div class="tile-icon tile-red">🗓️</div>
+        <div class="tile-body">
+          <h3>Workshops & Events</h3>
+          <p>Career, financial literacy, and personal development workshops throughout the year.</p>
+        </div>
+      </div>
+      <div class="program-tile">
+        <div class="tile-icon tile-green">🚀</div>
+        <div class="tile-body">
+          <h3>Career Development</h3>
+          <p>Internship prep, resume reviews, mock interviews, and networking events.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="upcoming-events">
+    <div class="section-header">
+      <div>
+        <p class="section-label">This Semester</p>
+        <h2 class="section-title">Upcoming <em>Events</em></h2>
+        <p class="section-desc">Workshops, excursions, and programs happening soon. Attend at least 3 per semester!</p>
+      </div>
+    </div>
+    <hr class="section-divider">
+    <div class="program-grid" style="margin-top:24px;" id="upcoming-events-grid">
+      <div style="text-align:center;padding:40px;color:var(--text-light);font-size:14px);grid-column:1/-1;">
+        <div style="font-size:32px;margin-bottom:10px;">📅</div>
+        <p>Upcoming events will appear here. Check back soon!</p>
+      </div>
+    </div>
+  </section>
+  <section id="resources">
+    <div class="section-header">
+      <div>
+        <p class="section-label">St. John's University</p>
+        <h2 class="section-title">Campus <em>Resources</em></h2>
+        <p class="section-desc">Everything you need at St. John's — academic support, wellness, jobs, and more all in one place.</p>
+      </div>
+    </div>
+    <hr class="section-divider">
+
+    <div style="display:grid;gap:28px;margin-top:24px;">
+
+      <!-- ALL IN ONE -->
+      <div>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);margin-bottom:12px;">🔗 All-in-One</p>
+        <div class="resource-grid">
+          <a href="https://linktr.ee/StJohnsNow?utm_source=linktree_profile_share&ltsid=5c62e73f-2692-42bf-944e-1c768b677058" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">🌐</div>
+            <div class="resource-info"><h3>St. John's Linktree</h3><p>All St. John's links in one place — the ultimate quick-access hub.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+          <a href="https://signon.stjohns.edu/" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">🔐</div>
+            <div class="resource-info"><h3>St. John's Sign On</h3><p>Access your email, Canvas, and all SJU platforms in one login.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+          <a href="https://experience.elluciancloud.com/sjusaasproduction" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">💻</div>
+            <div class="resource-info"><h3>New UIS Experience</h3><p>The new student information system for registration, records, and more.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+          <a href="https://www.stjohns.edu/who-we-are/faith-mission-ministry/help-basic-needs" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">🤝</div>
+            <div class="resource-info"><h3>Basic Needs Resources</h3><p>Food, housing, financial, and emergency support resources at SJU.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+          <div class="resource-card" style="cursor:pointer;" onclick="document.getElementById('deans-modal').classList.add('open')">
+            <div class="resource-icon">🎓</div>
+            <div class="resource-info"><h3>Deans & Academic Offices</h3><p>Contact info for all St. John's deans, advising offices, and college departments.</p></div>
+            <span class="resource-arrow">→</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACADEMIC SUPPORT -->
+      <div>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);margin-bottom:12px;">📐 Academic Support</p>
+        <div class="resource-grid">
+          <a href="https://ulc.mywconline.com/" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">📐</div>
+            <div class="resource-info"><h3>University Learning Commons</h3><p>Free tutoring appointments for all subjects.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+          <a href="https://stj.mywconline.com/" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">✍️</div>
+            <div class="resource-info"><h3>Writing Center</h3><p>Get help with essays, research papers, and personal statements.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+          <a href="https://www.stjohns.edu/academics/office-registrar/academic-calendar" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">📅</div>
+            <div class="resource-info"><h3>Academic Calendar</h3><p>Key dates — registration, finals, breaks, and deadlines.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- MENTORING PROGRAMS -->
+      <div>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);margin-bottom:12px;">🌱 Mentoring & Support Programs</p>
+        <div class="resource-grid">
+          <a href="#" class="resource-card">
+            <div class="resource-icon">🌱</div>
+            <div class="resource-info"><h3>RISE Mentoring</h3><p>Peer mentoring connecting students with upperclassmen and professionals.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+          <a href="#" class="resource-card">
+            <div class="resource-icon">🔬</div>
+            <div class="resource-info"><h3>CSTEP</h3><p>Collegiate Science and Technology Entry Program for STEM students.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+          <a href="#" class="resource-card">
+            <div class="resource-icon">🎓</div>
+            <div class="resource-info"><h3>McNair Scholars</h3><p>Federal TRIO program preparing first-gen students for doctoral study.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+          <a href="#" class="resource-card">
+            <div class="resource-icon">⚡</div>
+            <div class="resource-info"><h3>EPIC Mentoring</h3><p>Leadership and professional development mentoring program.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+          <a href="#" class="resource-card">
+            <div class="resource-icon">🚀</div>
+            <div class="resource-info"><h3>Aspire Mentoring</h3><p>One-on-one mentoring focused on academic success and career readiness.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- WELLNESS -->
+      <div>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);margin-bottom:12px;">🧠 Wellness & Health Services</p>
+        <div class="resource-grid">
+
+          <a href="https://www.stjohns.edu/life-st-johns/health-and-wellness/student-health-services" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">🏥</div>
+            <div class="resource-info">
+              <h3>Student Health Services (SHS)</h3>
+              <p>Free & confidential medical care to diagnose, treat, and manage minor illness and injuries.</p>
+              <p style="font-size:12px;margin-top:4px;">📍 DaSilva Hall (Rear Entrance across from Donovan Hall)</p>
+              <p style="font-size:12px;">📞 718-990-6360 &nbsp;|&nbsp; 🚨 Emergency: 718-990-5252</p>
+            </div>
+            <span class="resource-arrow">→</span>
+          </a>
+
+          <a href="https://www.stjohns.edu/life-st-johns/health-and-wellness/center-counseling-and-consultation" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">🧠</div>
+            <div class="resource-info">
+              <h3>Center for Counseling & Consultation (CCC)</h3>
+              <p>Free & confidential mental health services in a nonjudgmental space. Virtual appointments available.</p>
+              <p style="font-size:12px;margin-top:4px;">📍 Marillac Hall, Room 130</p>
+              <p style="font-size:12px;">📞 718-990-6384 &nbsp;|&nbsp; 🆘 24/7 Mental Health Helpline: 718-990-6352</p>
+            </div>
+            <span class="resource-arrow">→</span>
+          </a>
+
+          <a href="https://www.stjohns.edu/life-st-johns/health-and-wellness/sexual-assault-you-are-not-alone" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">💜</div>
+            <div class="resource-info">
+              <h3>Sexual Violence Outreach, Awareness & Response (SOAR)</h3>
+              <p>Trainings, workshops, and confidential support for survivors. Events: Take Back The Night (Oct) & Turn Off The Violence (Apr).</p>
+              <p style="font-size:12px;margin-top:4px;">📞 Campus Support Advisor: 718-990-8484</p>
+              <p style="font-size:12px;">✉️ soar@stjohns.edu &nbsp;|&nbsp; 📸 @soar_sju</p>
+            </div>
+            <span class="resource-arrow">→</span>
+          </a>
+
+          <a href="https://www.stjohns.edu/life-st-johns/health-and-wellness/office-disability-services" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">♿</div>
+            <div class="resource-info">
+              <h3>Office of Disability Services (ODS)</h3>
+              <p>Reasonable accommodations for students with permanent & temporary disabilities — extended exam time, assistive technology, ASL interpreters, accessible housing & more.</p>
+              <p style="font-size:12px;margin-top:4px;">📍 Marillac Hall, Room 134</p>
+              <p style="font-size:12px;">📞 718-990-6867 &nbsp;|&nbsp; ✉️ ods@stjohns.edu</p>
+            </div>
+            <span class="resource-arrow">→</span>
+          </a>
+
+          <a href="https://www.stjohns.edu/life-st-johns/campus-recreation" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">🏋️</div>
+            <div class="resource-info">
+              <h3>Campus Recreation (CREC)</h3>
+              <p>Carnesecca Fitness Center: cardio & strength machines, free weights, stretch area, fitness classes & personal training. Taffner Field House: intramurals, open rec, club sports — basketball, soccer, volleyball & more.</p>
+              <p style="font-size:12px;margin-top:4px;">📞 718-990-5810 &nbsp;|&nbsp; 📸 @stjohnscrec</p>
+            </div>
+            <span class="resource-arrow">→</span>
+          </a>
+
+          <a href="https://www.stjohns.edu/life-st-johns/health-and-wellness/wellness-education-and-prevention" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">🌿</div>
+            <div class="resource-info">
+              <h3>Wellness Education & Prevention</h3>
+              <p>Workshops on stress & time management, alcohol & other drugs, mindfulness, suicide prevention, mental health, sleep & more. Plus 1-on-1 wellness coaching.</p>
+              <p style="font-size:12px;margin-top:4px;">✉️ swell@stjohns.edu &nbsp;|&nbsp; 📸 @stjohnswellness</p>
+            </div>
+            <span class="resource-arrow">→</span>
+          </a>
+
+          <a href="https://www.stjohns.edu/academics/centers-institutes/inclusivity-resource-center" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">🌈</div>
+            <div class="resource-info">
+              <h3>Inclusivity Resource Center (IRC)</h3>
+              <p>A safe, inclusive space with programs, resources, and events that promote equity, belonging, and student support.</p>
+            </div>
+            <span class="resource-arrow">→</span>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- JOBS & OPPORTUNITIES -->
+      <div>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);margin-bottom:12px;">💼 Jobs & Opportunities</p>
+        <div class="resource-grid">
+          <a href="https://stjohns.joinhandshake.com/login" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">💼</div>
+            <div class="resource-info"><h3>Handshake</h3><p>Find internships, jobs, and career events tailored to SJU students.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+          <a href="https://www.stjohns.edu/about/leadership-and-administration/administrative-offices/human-resources/recruitment/student-employment" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">🏫</div>
+            <div class="resource-info"><h3>Student Employment at SJU</h3><p>On-campus job opportunities and work-study positions.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+          <a href="https://stjohns.joinhandshake.com/" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">🎯</div>
+            <div class="resource-info"><h3>Career Services</h3><p>Resume help, mock interviews, internship prep, and career fairs.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- STUDENT LIFE -->
+      <div>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);margin-bottom:12px;">🎓 Student Life</p>
+        <div class="resource-grid">
+          <a href="https://image.engage.stjohns.edu/lib/fe2a1173716405787c1076/m/1/6f69e5c4-e96e-436d-ad71-0ec10f90b94c.pdf" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">📋</div>
+            <div class="resource-info"><h3>Student Ambassador — Position Description</h3><p>Learn about the Student Ambassador role and what it involves.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+          <a href="https://apply.stjohns.edu/register/studentambassadorapp" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">✍️</div>
+            <div class="resource-info"><h3>Student Ambassador — Application</h3><p>Apply to become a Student Ambassador at St. John's.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+          <a href="https://apply.stjohns.edu/register/?id=953d4905-dc62-4ff8-835c-4b482924b1e4" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">📅</div>
+            <div class="resource-info"><h3>Student Ambassador — Info Session</h3><p>Attend an info session to learn more about the program.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+          <a href="https://forms.office.com/pages/responsepage.aspx?id=P4nfNtQNJ0GXpbxTe83GKmek5a3BI3ZCrccvJHI3Ez1UN0ZYTjdSR0JMTktFWUVLRzlaM0NKTzVDVy4u&route=shorturl" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">⛪</div>
+            <div class="resource-info"><h3>Campus Ministry Retreats – Spring 2026</h3><p>Sign up for upcoming Campus Ministry retreat opportunities.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- TRANSPORTATION & DINING -->
+      <div>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);margin-bottom:12px;">🚌 Transportation & Dining</p>
+        <div class="resource-grid">
+          <a href="https://www.stjohns.edu/life-st-johns/new-york-locations/transportation-options" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">🚌</div>
+            <div class="resource-info"><h3>Public Safety Shuttle Van</h3><p>Free shuttle service available for SJU students on campus.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+          <a href="https://emma-assets.s3.amazonaws.com/0kegb/35870c9192eb33179d37700b77142e44/Updated_SJU_X_GrubHub_Instagram_Posts__3_.pdf" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">🍔</div>
+            <div class="resource-info"><h3>GrubHub+ Information</h3><p>Learn how to use your GrubHub+ benefit as an SJU student.</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+          <a href="https://www.stjohns.edu/admission/tuition-and-financial-aid" target="_blank" rel="noopener" class="resource-card">
+            <div class="resource-icon">🎓</div>
+            <div class="resource-info"><h3>Financial Aid Office</h3><p>Questions about your aid package, grants, or work-study placement.</p><p style="font-size:12px;margin-top:4px;">📍 Queens Campus – Tobin College Building (Entrance across from Carnesecca Arena)</p></div>
+            <span class="resource-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section id="opportunities">
+    <div class="section-header">
+      <div>
+        <p class="section-label">Fellowships & Programs</p>
+        <h2 class="section-title">Off-Campus &amp; Online <em>Resources</em></h2>
+        <p class="section-desc">Competitive programs offering mentorship, internships, leadership training, and professional development for students like you.</p>
+      </div>
+    </div>
+    <hr class="section-divider">
+
+    <div class="opp-grid" style="margin-top:24px;">
+
+      <div class="opp-card">
+        <div class="opp-card-top">
+          <div class="opp-initials" style="background:#1A6B45;">A</div>
+          <div class="opp-badges">
+            <span class="badge badge-green">Fellowship</span>
+            <span class="badge badge-red">First-Gen</span>
+          </div>
+        </div>
+        <h3>America Needs You (ANY)</h3>
+        <p>A 2-year fellowship for first-gen, low-income students combining mentorship, career workshops, and professional development with guided internship and job placement support.</p>
+        <a href="https://americaneedsyou.org/" class="btn-outline" target="_blank" rel="noopener">Learn More →</a>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-card-top">
+          <div class="opp-initials" style="background:#C8420A;">A</div>
+          <div class="opp-badges">
+            <span class="badge badge-gold">First-Gen</span>
+            <span class="badge badge-green">Online</span>
+          </div>
+        </div>
+        <h3>America Needs You – FirstGenU</h3>
+        <p>A flexible, self-paced version of ANY offering online career modules, networking opportunities, and professional development tools for students.</p>
+        <a href="https://americaneedsyou.org/firstgenu/" class="btn-outline" target="_blank" rel="noopener">Learn More →</a>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-card-top">
+          <div class="opp-initials" style="background:#CC0033;">B</div>
+          <div class="opp-badges">
+            <span class="badge badge-red">Fellowship</span>
+            <span class="badge badge-gold">Career</span>
+          </div>
+        </div>
+        <h3>Basta Fellowship</h3>
+        <p>A structured program helping first-gen students secure strong full-time jobs through an intensive training period, 1:1 coaching, interview prep, and direct employer connections.</p>
+        <a href="https://www.projectbasta.com/fellowship" class="btn-outline" target="_blank" rel="noopener">Learn More →</a>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-card-top">
+          <div class="opp-initials" style="background:#2C6E8A;">S</div>
+          <div class="opp-badges">
+            <span class="badge badge-blue">Mentorship</span>
+            <span class="badge badge-green">Career</span>
+          </div>
+        </div>
+        <h3>StreetWise Partners</h3>
+        <p>A career mentorship program building professional skills, confidence, and networks. Work closely with mentors to improve resumes, interviewing, and long-term career strategy.</p>
+        <a href="https://www.streetwisepartners.org/" class="btn-outline" target="_blank" rel="noopener">Learn More →</a>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-card-top">
+          <div class="opp-initials" style="background:#1A3A8F;">L</div>
+          <div class="opp-badges">
+            <span class="badge badge-blue">Health</span>
+            <span class="badge badge-green">Internship</span>
+          </div>
+        </div>
+        <h3>LifeSci NYC</h3>
+        <p>A NYC initiative offering paid internships and training in life sciences fields like biotech and healthcare. Includes technical skill-building and industry career exposure.</p>
+        <a href="https://lifesci.nyc/" class="btn-outline" target="_blank" rel="noopener">Learn More →</a>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-card-top">
+          <div class="opp-initials" style="background:#5A3A8A;">E</div>
+          <div class="opp-badges">
+            <span class="badge badge-blue">Externship</span>
+            <span class="badge badge-green">Virtual</span>
+          </div>
+        </div>
+        <h3>Externs Weekly (Paragon One)</h3>
+        <p>Virtual externship programs where students complete short-term, real-world projects for companies — great for building your resume quickly with hands-on experience.</p>
+        <a href="https://join.paragonone.com/82a5b936/" class="btn-outline" target="_blank" rel="noopener">Learn More →</a>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-card-top">
+          <div class="opp-initials" style="background:#8A1A5A;">G</div>
+          <div class="opp-badges">
+            <span class="badge badge-red">Women</span>
+            <span class="badge badge-gold">Finance</span>
+          </div>
+        </div>
+        <h3>Girls Who Invest</h3>
+        <p>A highly selective program increasing women in finance, offering intensive investment training and paid internships at top firms, plus a strong alumni network.</p>
+        <a href="https://www.girlswhoinvest.org/" class="btn-outline" target="_blank" rel="noopener">Learn More →</a>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-card-top">
+          <div class="opp-initials" style="background:#1A5A3A;">G</div>
+          <div class="opp-badges">
+            <span class="badge badge-green">Women</span>
+            <span class="badge badge-blue">Tech</span>
+          </div>
+        </div>
+        <h3>Girls Who Code</h3>
+        <p>A nonprofit offering programs teaching coding, computer science fundamentals, and career readiness — helping students break into tech through education and community.</p>
+        <a href="https://girlswhocode.com/" class="btn-outline" target="_blank" rel="noopener">Learn More →</a>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-card-top">
+          <div class="opp-initials" style="background:#6B3A1A;">H</div>
+          <div class="opp-badges">
+            <span class="badge badge-gold">Fellowship</span>
+            <span class="badge badge-blue">Business</span>
+          </div>
+        </div>
+        <h3>Headstart Fellowship</h3>
+        <p>A career accelerator focused on business, startups, and finance, providing mentorship, networking opportunities, and exposure to professionals in competitive industries.</p>
+        <a href="https://www.headstartfellowship.com/fellowship" class="btn-outline" target="_blank" rel="noopener">Learn More →</a>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-card-top">
+          <div class="opp-initials" style="background:#1A4A6B;">L</div>
+          <div class="opp-badges">
+            <span class="badge badge-blue">NYC</span>
+            <span class="badge badge-green">Internship</span>
+          </div>
+        </div>
+        <h3>Ladders for Leaders (NYC)</h3>
+        <p>A selective NYC program that prepares students through training, then places them into paid professional internships with companies, nonprofits, and government agencies.</p>
+        <a href="https://www.commonpoint.org/program/ladders-for-leaders" class="btn-outline" target="_blank" rel="noopener">Learn More →</a>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-card-top">
+          <div class="opp-initials" style="background:#2C7A3A;">S</div>
+          <div class="opp-badges">
+            <span class="badge badge-green">NYC</span>
+            <span class="badge badge-gold">Paid</span>
+          </div>
+        </div>
+        <h3>SYEP – NYC Summer Youth Employment</h3>
+        <p>A large NYC program providing paid summer jobs to students, focusing on early work experience, career exposure, and professional skills development.</p>
+        <a href="https://application.nycsyep.com/" class="btn-outline" target="_blank" rel="noopener">Learn More →</a>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-card-top">
+          <div class="opp-initials" style="background:#4A1A6B;">A</div>
+          <div class="opp-badges">
+            <span class="badge badge-red">Leadership</span>
+            <span class="badge badge-gold">Global</span>
+          </div>
+        </div>
+        <h3>Aspire Leaders Program</h3>
+        <p>A free global leadership program offering career development training, leadership courses including Harvard-led content, and networking with peers worldwide.</p>
+        <a href="https://www.aspireleaders.org/" class="btn-outline" target="_blank" rel="noopener">Learn More →</a>
+      </div>
+
+      <div class="opp-card">
+        <div class="opp-card-top">
+          <div class="opp-initials" style="background:#1A3A6B;">M</div>
+          <div class="opp-badges">
+            <span class="badge badge-blue">Free</span>
+            <span class="badge badge-green">Online</span>
+          </div>
+        </div>
+        <h3>McKinsey Forward Program</h3>
+        <p>A free 10-week online program building core workplace skills like problem-solving, communication, adaptability, and digital literacy, with a certificate and global alumni network.</p>
+        <a href="https://www.mckinsey.org/our-programs/forward/overview" class="btn-outline" target="_blank" rel="noopener">Learn More →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- OPPORTUNITIES -->
+  <section id="opportunities-admin">
+    <div class="section-header">
+      <div>
+        <p class="section-label">Programs & Internships</p>
+        <h2 class="section-title"><em>Opportunities</em></h2>
+        <p class="section-desc">Fellowships, internships, leadership programs, and more — curated for SSS students.</p>
+      </div>
+    </div>
+    <hr class="section-divider">
+    <div class="program-grid" style="margin-top:24px;" id="opportunities-grid">
+      <p style="color:var(--text-light);font-size:14px;" id="opportunities-empty">No opportunities posted yet — check back soon!</p>
+    </div>
+  </section>
+
+  <!-- CAREER SERVICES TOOLS -->
+  <section id="career-services">
+    <div class="section-header">
+      <div>
+        <p class="section-label">Professional Development</p>
+        <h2 class="section-title">Career Services <em>Tools</em></h2>
+        <p class="section-desc">Two steps to launch your career — start by exploring your path, then use these tools to make it happen.</p>
+      </div>
+    </div>
+    <hr class="section-divider">
+
+    <!-- Step 1 -->
+    <div style="margin-bottom:32px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <div style="background:var(--red);color:white;font-weight:700;font-size:14px;padding:6px 14px;border-radius:20px;">Step 1</div>
+        <h3 style="font-family:'DM Serif Display',serif;font-size:20px;font-weight:400;margin:0;">Choose Your Career Path</h3>
+      </div>
+      <p style="font-size:14px;color:var(--text-light);line-height:1.7;margin-bottom:14px;">Career Communities at St. John's group together related industries and careers to help you explore paths based on your interests, not just your major. By joining, you get personalized resources, events, and opportunities that support your career goals and help you make connections.</p>
+      <a href="https://careerservices.stjohns.edu/channels/what-are-communities/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:var(--red);color:white;border-radius:9px;text-decoration:none;font-size:13px;font-weight:600;">Explore Career Communities →</a>
+    </div>
+
+    <!-- Step 2 -->
+    <div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <div style="background:var(--red);color:white;font-weight:700;font-size:14px;padding:6px 14px;border-radius:20px;">Step 2</div>
+        <h3 style="font-family:'DM Serif Display',serif;font-size:20px;font-weight:400;margin:0;">Use Online Resources</h3>
+      </div>
+      <div class="program-grid" style="margin-top:8px;">
+
+        <a href="https://stjohns.joinhandshake.com/login" target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon">🤝</div>
+          <div class="resource-info"><h3>Handshake</h3><p>St. John's recruiting platform for internships, jobs, and events.</p></div>
+          <span class="resource-arrow">→</span>
+        </a>
+
+        <a href="https://info.parkerdewey.com/student/stjohns" target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon">💼</div>
+          <div class="resource-info"><h3>Parker Dewey</h3><p>Paid micro-internship opportunities.</p></div>
+          <span class="resource-arrow">→</span>
+        </a>
+
+        <a href="https://www.theforage.com/landing/st-johns-university-7t43j/st-johns-university-k40f" target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon">🌱</div>
+          <div class="resource-info"><h3>Forage</h3><p>Virtual work experience programs with top companies.</p></div>
+          <span class="resource-arrow">→</span>
+        </a>
+
+        <a href="https://student.interstride.com/login" target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon">🌍</div>
+          <div class="resource-info"><h3>Interstride</h3><p>Job search support for international students.</p></div>
+          <span class="resource-arrow">→</span>
+        </a>
+
+        <a href="https://whatcanidowiththismajor.com/" target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon">🎓</div>
+          <div class="resource-info"><h3>What Can I Do With This Major?</h3><p>Explore career paths by major.</p></div>
+          <span class="resource-arrow">→</span>
+        </a>
+
+        <a href="https://www.onetonline.org/" target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon">🔍</div>
+          <div class="resource-info"><h3>O*Net Online</h3><p>Learn about job requirements, skills, and careers.</p></div>
+          <span class="resource-arrow">→</span>
+        </a>
+
+        <a href="https://www.bls.gov/ooh/" target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon">📊</div>
+          <div class="resource-info"><h3>Occupational Outlook Handbook</h3><p>Salary, job outlook, and industry trends.</p></div>
+          <span class="resource-arrow">→</span>
+        </a>
+
+        <a href="https://careerservices.stjohns.edu/videos/?ctag%5B%5D=candid-career-videos" target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon">🎬</div>
+          <div class="resource-info"><h3>Candid Career</h3><p>Career videos from industry professionals.</p></div>
+          <span class="resource-arrow">→</span>
+        </a>
+
+        <a href="https://careerservices.stjohns.edu/resources/big-interview/" target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon">🎤</div>
+          <div class="resource-info"><h3>Big Interview</h3><p>Practice interviews with video feedback.</p></div>
+          <span class="resource-arrow">→</span>
+        </a>
+
+        <a href="https://www.linkedin.com/company/stjohnscareerservices/" target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon">🔗</div>
+          <div class="resource-info"><h3>LinkedIn – Career Services</h3><p>Connect and build your network.</p></div>
+          <span class="resource-arrow">→</span>
+        </a>
+
+        <a href="https://careerservices.stjohns.edu/account/login/?redirect_to=%2Fresources%2Ffocus2%2F&restricted=true" target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon">🧭</div>
+          <div class="resource-info"><h3>Focus2</h3><p>Career assessment tool (login required).</p></div>
+          <span class="resource-arrow">→</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="scholarships">
+    <div class="section-header">
+      <div>
+        <p class="section-label">Financial Support</p>
+        <h2 class="section-title">Scholarship <em>Support</em></h2>
+        <p class="section-desc">Three ways to get more money for college — start with Step 1 every semester before moving to external scholarships.</p>
+      </div>
+    </div>
+    <hr class="section-divider">
+
+    <!-- 3 STEPS -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:24px;margin-bottom:36px;">
+
+      <!-- Step 1 -->
+      <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:26px;position:relative;box-shadow:0 4px 16px var(--shadow);">
+        <div style="position:absolute;top:-14px;left:20px;background:var(--red);color:white;font-family:'DM Serif Display',serif;font-size:13px;padding:4px 14px;border-radius:100px;font-weight:400;">Step 1</div>
+        <div style="font-size:32px;margin-bottom:10px;margin-top:8px;">📩</div>
+        <h3 style="font-family:'DM Serif Display',serif;font-size:17px;font-weight:400;color:var(--dark);margin-bottom:8px;">Appeal Your Financial Aid</h3>
+        <p style="font-size:13px;color:var(--text-light);font-weight:300;line-height:1.6;margin-bottom:16px;">Every semester, appeal your financial aid through St. John's University. You may get a rejection letter saying the school doesn't have enough funding — <strong style="color:var(--dark);">keep trying every semester anyway.</strong> It costs nothing and you could receive additional funding.</p>
+        <a href="https://stjohnsfinancialservices.docmgt.cloud/v4/public/Form/1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:var(--red);color:white;border-radius:9px;text-decoration:none;font-size:13px;font-weight:600;">📩 Appeal Financial Aid →</a>
+      </div>
+
+      <!-- Step 2 -->
+      <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:26px;position:relative;box-shadow:0 4px 16px var(--shadow);">
+        <div style="position:absolute;top:-14px;left:20px;background:var(--gold);color:white;font-family:'DM Serif Display',serif;font-size:13px;padding:4px 14px;border-radius:100px;font-weight:400;">Step 2</div>
+        <div style="font-size:32px;margin-bottom:10px;margin-top:8px;">🏛️</div>
+        <h3 style="font-family:'DM Serif Display',serif;font-size:17px;font-weight:400;color:var(--dark);margin-bottom:8px;">Apply to SJU Endowment Scholarships</h3>
+        <p style="font-size:13px;color:var(--text-light);font-weight:300;line-height:1.6;margin-bottom:16px;">Complete the general application for endowment scholarships offered directly by St. John's University. These are scholarships funded by donors specifically for SJU students — apply every year.</p>
+        <a href="https://stjohns.academicworks.com/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:var(--gold);color:white;border-radius:9px;text-decoration:none;font-size:13px;font-weight:600;">🏛️ Apply on AcademicWorks →</a>
+      </div>
+
+      <!-- Step 3 -->
+      <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:26px;position:relative;box-shadow:0 4px 16px var(--shadow);">
+        <div style="position:absolute;top:-14px;left:20px;background:#1A6B45;color:white;font-family:'DM Serif Display',serif;font-size:13px;padding:4px 14px;border-radius:100px;font-weight:400;">Step 3</div>
+        <div style="font-size:32px;margin-bottom:10px;margin-top:8px;">🌐</div>
+        <h3 style="font-family:'DM Serif Display',serif;font-size:17px;font-weight:400;color:var(--dark);margin-bottom:8px;">Apply to External Scholarships</h3>
+        <p style="font-size:13px;color:var(--text-light);font-weight:300;line-height:1.6;margin-bottom:16px;">Search and apply to outside scholarships from organizations, companies, and foundations. Browse our curated list — filtered by your major, eligibility, and upcoming deadlines.</p>
+        <a href="scholarships.html" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;background:#1A6B45;color:white;border-radius:9px;text-decoration:none;font-size:13px;font-weight:600;">🔍 Browse Scholarship Finder →</a>
+      </div>
+
+    </div>
+
+  </section>
+  <section id="guides">
+    <div class="section-header">
+      <div>
+        <p class="section-label">Step-by-Step</p>
+        <h2 class="section-title">How-To <em>Guides</em></h2>
+        <p class="section-desc">Practical guides built for first-gen students to navigate college, careers, and finances with confidence.</p>
+      </div>
+      <a href="#" class="section-link">All guides →</a>
+    </div>
+    <hr class="section-divider">
+
+    <div class="guide-tabs" style="margin-top:24px;">
+      <button class="tab-btn active" onclick="filterGuides('all', this)">All Guides</button>
+      <button class="tab-btn" onclick="filterGuides('career', this)">Career & Professional</button>
+      <button class="tab-btn" onclick="filterGuides('finance', this)">Financial Skills</button>
+      <button class="tab-btn" onclick="filterGuides('academic', this)">Academic Success</button>
+    </div>
+
+    <div class="guide-grid" id="guide-grid">
+
+      <!-- Career -->
+      <div class="guide-card" data-cat="career">
+        <div class="guide-card-top career"></div>
+        <div class="guide-card-body">
+          <span class="guide-tag tag-career">Career</span>
+          <h3>How to Find an Internship (Even With No Experience)</h3>
+          <p>A step-by-step approach to landing your first internship using the resources available to you right now.</p>
+          <a href="#" class="btn-sm">Read Guide →</a>
+        </div>
+      </div>
+
+      <div class="guide-card" data-cat="career">
+        <div class="guide-card-top career"></div>
+        <div class="guide-card-body">
+          <span class="guide-tag tag-career">Career</span>
+          <h3>How to Build a Resume From Scratch</h3>
+          <p>Create a professional resume that highlights your strengths, even if you're just starting out.</p>
+          <a href="#" class="btn-sm">Read Guide →</a>
+        </div>
+      </div>
+
+      <div class="guide-card" data-cat="career">
+        <div class="guide-card-top career"></div>
+        <div class="guide-card-body">
+          <span class="guide-tag tag-career">Career</span>
+          <h3>How to Network Without Feeling Awkward</h3>
+          <p>Practical strategies for building professional connections authentically — no suit required.</p>
+          <a href="#" class="btn-sm">Read Guide →</a>
+        </div>
+      </div>
+
+      <div class="guide-card" data-cat="career">
+        <div class="guide-card-top career"></div>
+        <div class="guide-card-body">
+          <span class="guide-tag tag-career">Career</span>
+          <h3>How to Use LinkedIn as a College Student</h3>
+          <p>Set up a strong profile, connect with alumni, and use LinkedIn to find real opportunities.</p>
+          <a href="#" class="btn-sm">Read Guide →</a>
+        </div>
+      </div>
+
+      <div class="guide-card" data-cat="career">
+        <div class="guide-card-top career"></div>
+        <div class="guide-card-body">
+          <span class="guide-tag tag-career">Career</span>
+          <h3>How to Prepare for Behavioral Interviews</h3>
+          <p>Master the STAR method and confidently answer "Tell me about a time when…" questions.</p>
+          <a href="#" class="btn-sm">Read Guide →</a>
+        </div>
+      </div>
+
+      <div class="guide-card" data-cat="career">
+        <div class="guide-card-top career"></div>
+        <div class="guide-card-body">
+          <span class="guide-tag tag-career">Career</span>
+          <h3>How to Prepare for Career Fairs</h3>
+          <p>Walk in prepared: what to bring, what to say, and how to follow up afterward.</p>
+          <a href="#" class="btn-sm">Read Guide →</a>
+        </div>
+      </div>
+
+      <!-- Finance -->
+      <div class="guide-card" data-cat="finance">
+        <div class="guide-card-top finance"></div>
+        <div class="guide-card-body">
+          <span class="guide-tag tag-finance">Financial</span>
+          <h3>How to Budget Your Financial Aid Refund</h3>
+          <p>Make your refund last the whole semester with a simple, realistic budget plan.</p>
+          <a href="#" class="btn-sm">Read Guide →</a>
+        </div>
+      </div>
+
+      <div class="guide-card" data-cat="finance">
+        <div class="guide-card-top finance"></div>
+        <div class="guide-card-body">
+          <span class="guide-tag tag-finance">Financial</span>
+          <h3>How to Build Credit Safely</h3>
+          <p>Start building credit now so you're set when you graduate — without falling into debt traps.</p>
+          <a href="#" class="btn-sm">Read Guide →</a>
+        </div>
+      </div>
+
+      <div class="guide-card" data-cat="finance">
+        <div class="guide-card-top finance"></div>
+        <div class="guide-card-body">
+          <span class="guide-tag tag-finance">Financial</span>
+          <h3>How to Apply for Scholarships</h3>
+          <p>Find scholarships you're eligible for and write compelling applications that stand out.</p>
+          <a href="#" class="btn-sm">Read Guide →</a>
+        </div>
+      </div>
+
+      <!-- Academic -->
+      <div class="guide-card" data-cat="academic">
+        <div class="guide-card-top academic"></div>
+        <div class="guide-card-body">
+          <span class="guide-tag tag-academic">Academic</span>
+          <h3>How to Balance School, Work, and Family</h3>
+          <p>Real strategies for managing competing responsibilities without burning out.</p>
+          <a href="#" class="btn-sm">Read Guide →</a>
+        </div>
+      </div>
+
+      <div class="guide-card" data-cat="academic">
+        <div class="guide-card-top academic"></div>
+        <div class="guide-card-body">
+          <span class="guide-tag tag-academic">Academic</span>
+          <h3>How to Apply to Graduate School</h3>
+          <p>A step-by-step guide to the grad school application process from start to finish.</p>
+          <a href="#" class="btn-sm">Read Guide →</a>
+        </div>
+      </div>
+
+      <div class="guide-card" data-cat="academic">
+        <div class="guide-card-top academic"></div>
+        <div class="guide-card-body">
+          <span class="guide-tag tag-academic">Academic</span>
+          <h3>How to Choose What to Do With Your Degree</h3>
+          <p>Explore your options and make a confident decision about your career path after graduation.</p>
+          <a href="#" class="btn-sm">Read Guide →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <section id="spotlights">
+    <div class="section-header">
+      <div>
+        <p class="section-label">Inspiring Stories</p>
+        <h2 class="section-title">Student <em>Spotlights</em></h2>
+        <p class="section-desc">Real SSS students, real achievements. Let their journeys inspire yours.</p>
+      </div>
+    </div>
+    <hr class="section-divider">
+
+    <div class="spotlight-grid" style="margin-top:24px;">
+
+      <div class="spotlight-card">
+        <div class="spotlight-banner r1">
+          <div class="spotlight-avatar">M</div>
+        </div>
+        <div class="spotlight-body">
+          <h3>Maria R.</h3>
+          <p class="spotlight-role">Landed a Finance Internship at a Top NYC Firm</p>
+          <p class="spotlight-quote">"SSS taught me how to turn my work-study job into a resume win. I didn't think I was 'qualified' — until I was."</p>
+          <div class="spotlight-tags">
+            <span class="stag">Finance</span>
+            <span class="stag">First-Gen</span>
+            <span class="stag">SEO Career</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="spotlight-card">
+        <div class="spotlight-banner r2">
+          <div class="spotlight-avatar">J</div>
+        </div>
+        <div class="spotlight-body">
+          <h3>James T.</h3>
+          <p class="spotlight-role">McNair Scholar · Pursuing a PhD in Biology</p>
+          <p class="spotlight-quote">"I didn't know grad school was even possible for someone like me. The SSS advisors helped me believe it was — and then make it happen."</p>
+          <div class="spotlight-tags">
+            <span class="stag">Research</span>
+            <span class="stag">STEM</span>
+            <span class="stag">McNair</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="spotlight-card">
+        <div class="spotlight-banner r3">
+          <div class="spotlight-avatar">A</div>
+        </div>
+        <div class="spotlight-body">
+          <h3>Aaliyah K.</h3>
+          <p class="spotlight-role">Student Leader · Balancing 3 Roles &amp; Dean's List</p>
+          <p class="spotlight-quote">"Working, leading a club, and keeping my GPA up felt impossible. The balance guide from SSS changed how I think about my time."</p>
+          <div class="spotlight-tags">
+            <span class="stag">Leadership</span>
+            <span class="stag">Dean's List</span>
+            <span class="stag">Work-Study</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <section id="newsletters">
+    <div class="section-header">
+      <div>
+        <p class="section-label">Archive</p>
+        <h2 class="section-title">Monthly <em>Newsletters</em></h2>
+        <p class="section-desc">Every edition is packed with internships, spotlights, events, and resources curated just for SSS students.</p>
+      </div>
+      <a href="#" class="section-link">All newsletters →</a>
+    </div>
+    <hr class="section-divider">
+
+    <div class="newsletter-list" style="margin-top:24px;">
+
+      <div class="newsletter-row">
+        <div class="nl-date">
+          <div class="month">Apr</div>
+          <div class="year">25</div>
+        </div>
+        <div class="nl-info">
+          <h3>April 2025 – Spring Opportunities Edition</h3>
+          <p>Summer internship deadlines, scholarship spotlights, and end-of-year events.</p>
+        </div>
+        <div class="nl-tags">
+          <span class="badge badge-red">Internships</span>
+          <span class="badge badge-gold">Scholarships</span>
+          <span class="badge badge-green">Events</span>
+        </div>
+        <div class="nl-action"><a href="#">Read →</a></div>
+      </div>
+
+      <div class="newsletter-row">
+        <div class="nl-date">
+          <div class="month">Mar</div>
+          <div class="year">25</div>
+        </div>
+        <div class="nl-info">
+          <h3>March 2025 – Career Fair Prep Edition</h3>
+          <p>How to prepare for career fairs, resume tips, and fellowship deadlines.</p>
+        </div>
+        <div class="nl-tags">
+          <span class="badge badge-blue">Career</span>
+          <span class="badge badge-red">Fellowships</span>
+        </div>
+        <div class="nl-action"><a href="#">Read →</a></div>
+      </div>
+
+      <div class="newsletter-row">
+        <div class="nl-date">
+          <div class="month">Feb</div>
+          <div class="year">25</div>
+        </div>
+        <div class="nl-info">
+          <h3>February 2025 – Financial Literacy Edition</h3>
+          <p>Budgeting your refund, building credit, and student spotlight feature.</p>
+        </div>
+        <div class="nl-tags">
+          <span class="badge badge-gold">Financial</span>
+          <span class="badge badge-green">Spotlight</span>
+        </div>
+        <div class="nl-action"><a href="#">Read →</a></div>
+      </div>
+
+      <div class="newsletter-row">
+        <div class="nl-date">
+          <div class="month">Jan</div>
+          <div class="year">25</div>
+        </div>
+        <div class="nl-info">
+          <h3>January 2025 – New Semester Kickoff</h3>
+          <p>Goal-setting guide, new workshop schedule, and spring internship board.</p>
+        </div>
+        <div class="nl-tags">
+          <span class="badge badge-red">Academic</span>
+          <span class="badge badge-blue">Internships</span>
+        </div>
+        <div class="nl-action"><a href="#">Read →</a></div>
+      </div>
+
+      <div class="newsletter-row">
+        <div class="nl-date">
+          <div class="month">Dec</div>
+          <div class="year">24</div>
+        </div>
+        <div class="nl-info">
+          <h3>December 2024 – Finals & Year-End Recap</h3>
+          <p>Study strategies for finals week, year-in-review, and student success stories.</p>
+        </div>
+        <div class="nl-tags">
+          <span class="badge badge-green">Academic</span>
+          <span class="badge badge-gold">Recap</span>
+        </div>
+        <div class="nl-action"><a href="#">Read →</a></div>
+      </div>
+
+    </div>
+  </section>
+  <section id="past-events">
+    <div class="section-header">
+      <div>
+        <p class="section-label">Archive</p>
+        <h2 class="section-title">Past <em>Events</em></h2>
+        <p class="section-desc">A look back at previous SSS workshops, excursions, and programs.</p>
+      </div>
+    </div>
+    <hr class="section-divider">
+    <div class="program-grid" style="margin-top:24px;" id="past-events-grid">
+      <div style="text-align:center;padding:40px;color:var(--text-light);font-size:14px;grid-column:1/-1;">
+        <div style="font-size:32px;margin-bottom:10px;">🗂</div>
+        <p>Past events will appear here once added.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEANS MODAL -->
+  <div id="deans-modal" class="modal-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;overflow-y:auto;padding:24px 16px;" onclick="if(event.target===this)this.classList.remove('open')">
+    <div style="background:white;border-radius:20px;max-width:720px;margin:0 auto;padding:36px 32px;position:relative;">
+      <button onclick="document.getElementById('deans-modal').classList.remove('open')" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:#666;">✕</button>
+      <h2 style="font-family:'DM Serif Display',serif;font-size:26px;font-weight:400;margin-bottom:6px;">Deans & Academic Offices</h2>
+      <p style="color:#888;font-size:13px;margin-bottom:28px;">Contact information for all St. John's colleges and advising offices.</p>
+
+      <!-- Liberal Arts -->
+      <div style="margin-bottom:28px;">
+        <div style="background:#CC0033;color:white;border-radius:10px;padding:12px 16px;margin-bottom:14px;">
+          <h3 style="font-size:15px;font-weight:600;margin:0;">📚 St. John's College of Liberal Arts & Sciences</h3>
+          <p style="font-size:12px;opacity:0.85;margin:2px 0 0;">Dean's Office</p>
+        </div>
+        <div style="display:grid;gap:8px;font-size:13px;color:#444;padding:0 4px;">
+          <p>📍 St. John Hall, Room 135 (Queens Campus)</p>
+          <p>✉️ <a href="mailto:delgadot@stjohns.edu" style="color:#CC0033;text-decoration:none;">delgadot@stjohns.edu</a></p>
+          <p>✉️ Graduate Division: <a href="mailto:sjcgr@stjohns.edu" style="color:#CC0033;text-decoration:none;">sjcgr@stjohns.edu</a></p>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div style="margin-bottom:28px;">
+        <div style="background:#1A3A8F;color:white;border-radius:10px;padding:12px 16px;margin-bottom:14px;">
+          <h3 style="font-size:15px;font-weight:600;margin:0;">🏫 School of Education – Dean's Office (Queens Campus)</h3>
+          <p style="font-size:12px;opacity:0.85;margin:2px 0 0;">📍 Main: St. John Hall, Room 135</p>
+        </div>
+        <div style="display:grid;gap:10px;font-size:13px;color:#444;padding:0 4px;">
+          <div style="background:#f9f9f9;border-radius:8px;padding:12px;">
+            <p style="font-weight:600;margin-bottom:6px;">Dean's Office</p>
+            <p>👤 Dean: James D. Wolfinger, Ph.D. &nbsp;|&nbsp; Contact: Rosemary Costabile</p>
+            <p>📍 Sullivan Hall, 5th Floor &nbsp;|&nbsp; 📞 718-990-5850 &nbsp;|&nbsp; ✉️ costabir@stjohns.edu</p>
+          </div>
+          <div style="background:#f9f9f9;border-radius:8px;padding:12px;">
+            <p style="font-weight:600;margin-bottom:6px;">Associate Dean</p>
+            <p>👤 Dr. Mirella Avalos-Louie &nbsp;|&nbsp; Contact: Tamein Haynes</p>
+            <p>📞 718-990-1695 &nbsp;|&nbsp; ✉️ haynest1@stjohns.edu</p>
+          </div>
+          <div style="background:#f9f9f9;border-radius:8px;padding:12px;">
+            <p style="font-weight:600;margin-bottom:6px;">Curriculum & Instruction</p>
+            <p>📌 Chair: Dr. Donald McClure</p>
+            <p><em>Undergraduate:</em> Bernadette Zacharuk &nbsp;|&nbsp; 📞 718-990-2664 &nbsp;|&nbsp; ✉️ zacharub@stjohns.edu &nbsp;|&nbsp; Sullivan Hall, Rm 133</p>
+            <p><em>Graduate:</em> Reshma Mohabir &nbsp;|&nbsp; 📞 718-990-5644 &nbsp;|&nbsp; ✉️ mohabirr@stjohns.edu</p>
+          </div>
+          <div style="background:#f9f9f9;border-radius:8px;padding:12px;">
+            <p style="font-weight:600;margin-bottom:6px;">Administration & Instructional Leadership</p>
+            <p>📌 Chair: Dr. Stephen Kotok &nbsp;|&nbsp; 📞 718-990-2654 &nbsp;|&nbsp; ✉️ kotoks@stjohns.edu</p>
+          </div>
+          <div style="background:#f9f9f9;border-radius:8px;padding:12px;">
+            <p style="font-weight:600;margin-bottom:6px;">Education Specialties</p>
+            <p>👤 Eileen Lewis &nbsp;|&nbsp; 📞 718-990-1563 &nbsp;|&nbsp; ✉️ lewise@stjohns.edu</p>
+          </div>
+          <div style="background:#f9f9f9;border-radius:8px;padding:12px;">
+            <p style="font-weight:600;margin-bottom:6px;">Counselor Education</p>
+            <p>👤 Cathy Berardi &nbsp;|&nbsp; 📞 718-990-6455 &nbsp;|&nbsp; ✉️ berardic@stjohns.edu</p>
+          </div>
+          <div style="background:#f9f9f9;border-radius:8px;padding:12px;">
+            <p style="font-weight:600;margin-bottom:6px;">Graduate Recruitment</p>
+            <p>👤 Stephanie Shaw, Ed.D. &nbsp;|&nbsp; 📞 718-990-6034 &nbsp;|&nbsp; ✉️ shaws@stjohns.edu</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tobin Business -->
+      <div style="margin-bottom:28px;">
+        <div style="background:#C8972A;color:white;border-radius:10px;padding:12px 16px;margin-bottom:14px;">
+          <h3 style="font-size:15px;font-weight:600;margin:0;">💼 Peter J. Tobin College of Business – Dean's Office</h3>
+          <p style="font-size:12px;opacity:0.85;margin:2px 0 0;">📍 Bent Hall, 1st Floor</p>
+        </div>
+        <div style="font-size:13px;color:#444;padding:0 4px;display:grid;gap:6px;">
+          <p>👤 Dean: Maciek Nowak, Ph.D.</p>
+          <p>📞 Main: 718-990-2000 &nbsp;|&nbsp; Undergrad: 718-990-6212 &nbsp;|&nbsp; Grad: 718-990-6417</p>
+          <p>🕐 Mon–Thurs: 8:30 AM – 4:30 PM &nbsp;|&nbsp; Fri: 8:30 AM – 3:00 PM</p>
+        </div>
+      </div>
+
+      <!-- Pharmacy -->
+      <div style="margin-bottom:28px;">
+        <div style="background:#1A6B45;color:white;border-radius:10px;padding:12px 16px;margin-bottom:14px;">
+          <h3 style="font-size:15px;font-weight:600;margin:0;">💊 College of Pharmacy & Health Sciences (CPHS)</h3>
+          <p style="font-size:12px;opacity:0.85;margin:2px 0 0;">📍 St. Albert Hall, Room 171</p>
+        </div>
+        <div style="font-size:13px;color:#444;padding:0 4px;display:grid;gap:6px;">
+          <p>👤 Dean: Anne Y. F. Lin, Pharm.D.</p>
+          <p>📞 General/Undergrad: 718-990-6275 &nbsp;|&nbsp; PharmD: 718-990-1439 &nbsp;|&nbsp; Grad (PhD/Master's): 718-990-6187</p>
+          <p>✉️ CPHS@stjohns.edu</p>
+          <p>🕐 Mon–Thurs: 8:30 AM – 4:30 PM &nbsp;|&nbsp; Fri: 8:30 AM – 3:00 PM</p>
+        </div>
+      </div>
+
+      <!-- CCPS -->
+      <div style="margin-bottom:28px;">
+        <div style="background:#6B3A8A;color:white;border-radius:10px;padding:12px 16px;margin-bottom:14px;">
+          <h3 style="font-size:15px;font-weight:600;margin:0;">🎓 Collins College of Professional Studies (CCPS)</h3>
+          <p style="font-size:12px;opacity:0.85;margin:2px 0 0;">📍 St. Augustine Hall, 2nd Floor</p>
+        </div>
+        <div style="font-size:13px;color:#444;padding:0 4px;display:grid;gap:10px;">
+          <div>
+            <p>👤 Dean: Luca Iandoli, Ph.D.</p>
+            <p>📞 718-990-6414</p>
+            <p>🕐 Mon–Thurs: 8:30 AM – 4:30 PM &nbsp;|&nbsp; Fri: 8:30 AM – 3:00 PM</p>
+          </div>
+          <div style="background:#f9f9f9;border-radius:8px;padding:12px;">
+            <p style="font-weight:600;margin-bottom:6px;">Leadership</p>
+            <p>Craig Baron — Associate Dean (Academic Faculty)</p>
+            <p>Radhika Jha — Associate Dean (Graduate & Engagement)</p>
+          </div>
+          <div style="background:#f9f9f9;border-radius:8px;padding:12px;">
+            <p style="font-weight:600;margin-bottom:8px;">Advising Deans (by last name)</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;">
+              <p>A–B: Andrew Bhola</p>
+              <p>C–D: Gail Chiarovano</p>
+              <p>E–G: Fr. Michael Cummins</p>
+              <p>H–L: Theresa Peros</p>
+              <p>M–P: Geraldine Castelli</p>
+              <p>Q–S: Diana Morgan</p>
+              <p>T–Z / ROTC / Veterans: Randy Ortiz</p>
+              <p>Graduate (A–Z): Justin Goldberg</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <style>
+    #deans-modal { display: none; }
+    #deans-modal.open { display: block; }
+  </style>
+
+  <!-- GRANTS MODAL -->
+  <div id="grants-modal" style="position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;overflow-y:auto;padding:24px 16px;" onclick="if(event.target===this)this.classList.remove('open')">
+    <div style="background:white;border-radius:20px;max-width:620px;margin:0 auto;padding:36px 32px;position:relative;">
+      <button onclick="document.getElementById('grants-modal').classList.remove('open')" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:#666;">✕</button>
+
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <div style="background:#F5E6C8;border-radius:12px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;">💰</div>
+        <div>
+          <h2 style="font-family:'DM Serif Display',serif;font-size:24px;font-weight:400;margin:0;">Tuition Support Grants</h2>
+          <p style="color:#888;font-size:13px;margin:2px 0 0;">SSS Supplemental Grant Funding</p>
+        </div>
+      </div>
+
+      <!-- Eligibility info -->
+      <div style="background:#fff8f0;border-left:4px solid #C8972A;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:16px;">
+        <p style="font-size:13px;font-weight:600;color:#C8972A;margin-bottom:6px;">📅 When to Request</p>
+        <p style="font-size:13px;color:#444;line-height:1.6;">Grants may be requested after your first semester as an active SSS student. Requests must be submitted <strong>during the semester prior</strong> to the one for which funding is sought (e.g., request a spring grant during the fall semester).</p>
+      </div>
+
+      <div style="background:#fff0f3;border-left:4px solid #CC0033;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:16px;">
+        <p style="font-size:13px;font-weight:600;color:#CC0033;margin-bottom:6px;">✅ Eligibility Requirements</p>
+        <p style="font-size:13px;color:#444;line-height:1.6;">To be eligible, students must be <strong>active SSS participants</strong>. This includes:</p>
+        <ul style="font-size:13px;color:#444;line-height:1.8;margin:8px 0 0 16px;">
+          <li>Attending at least <strong>3 events or workshops</strong> each semester</li>
+          <li>Communicating with SSS staff if unable to attend</li>
+          <li>Responding to required emails</li>
+          <li>Reviewing program resources</li>
+          <li>Participating in check-ins and advising sessions</li>
+        </ul>
+      </div>
+
+      <div style="background:#f0f4ff;border-left:4px solid #1A3A8F;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:20px;">
+        <p style="font-size:13px;font-weight:600;color:#1A3A8F;margin-bottom:6px;">ℹ️ Important Notes</p>
+        <p style="font-size:13px;color:#444;line-height:1.6;">Grants are <strong>not guaranteed</strong> and are awarded based on available funding, student engagement, and demonstrated need. Students must be <strong>Pell Grant recipients</strong> and have an outstanding balance on their account at the time Financial Services applies the grant.</p>
+      </div>
+
+      <!-- Contact -->
+      <div style="background:#f9f9f9;border-radius:12px;padding:16px 18px;margin-bottom:24px;">
+        <p style="font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#888;margin-bottom:8px;">Contact</p>
+        <p style="font-size:14px;font-weight:600;color:#222;margin-bottom:4px;">Halima Camara</p>
+        <p style="font-size:13px;color:#555;">SSS Assistant Director</p>
+        <p style="font-size:13px;color:#555;">📍 St. John's Hall, Rm. 103</p>
+        <p style="font-size:13px;color:#555;">📞 718-990-3230</p>
+      </div>
+
+      <!-- Request button -->
+      <button onclick="requestGrant()" style="width:100%;padding:14px;background:#CC0033;color:white;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+        ✉️ Request a Grant
+      </button>
+      <p style="font-size:11px;color:#aaa;text-align:center;margin-top:8px;">This will open a pre-filled email in your mail app.</p>
+    </div>
+  </div>
+
+  <style>
+    #grants-modal { display: none; }
+    #grants-modal.open { display: block; }
+  </style>
+
+  <script>
+  function requestGrant() {
+    const subject = encodeURIComponent('SSS Tuition Support Grant Request');
+    const body = encodeURIComponent(
+`Dear Halima,
+
+I would like to request a Tuition Support Grant for the upcoming semester. Please find my information below:
+
+Full Name: 
+XID: 
+Semester Requesting Grant For (e.g., Spring 2026): 
+Major: 
+Expected Graduation Year: 
+SSS Meetings/Events Attended This Semester:
+  1. 
+  2. 
+  3. 
+
+Please let me know if you need any additional information.
+
+Thank you,
+[Your Name]`
+    );
+    window.location.href = `mailto:camarah@stjohns.edu?subject=${subject}&body=${body}`;
+  }
+  </script>
+
+  <!-- DISCLAIMER -->
+  <div style="background:var(--warm-gray);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-top:48px;margin-bottom:0;">
+    <p style="font-size:12px;color:var(--text-light);font-weight:300;line-height:1.7;text-align:center;">
+      <strong style="color:var(--text);font-weight:600;">Disclaimer:</strong> The information provided on this website is for general informational purposes only. All resources, links, opportunities, and program details are shared to help SSS students navigate college life. Information is subject to change — please verify details directly with the relevant office or organization. This site is maintained by the SSS Student Coordinator at St. John's University and is not an official St. John's University website. For official university information, visit <a href="https://www.stjohns.edu" target="_blank" rel="noopener" style="color:var(--red);font-weight:500;">stjohns.edu</a>.
+    </p>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <div>
+      <h2>Need help? We're here for you.</h2>
+      <p>Stop by the SSS office, schedule an advisement meeting, or reach out via email. You don't have to figure everything out alone.</p>
+    </div>
+    <a href="/cdn-cgi/l/email-protection#2e5d5d5d6e5d5a444146405d004b4a5b" class="btn-primary">
+      📧 Contact SSS Office
+    </a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">S³</div>
+        <div class="footer-brand-text">
+          <strong>Student Support Services</strong>
+          <span>St. John's University · TRIO Program</span>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="#about">About SSS</a>
+        <a href="#guides">Guides</a>
+        <a href="#opportunities">Opportunities</a>
+        <a href="#newsletters">Newsletters</a>
+        <a href="#spotlights">Spotlights</a>
+        <a href="#resources">Resources</a>
+      </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-bottom">
+      <p>© 2025 SSS Student Success Hub · St. John's University</p>
+      <p>Funded by the U.S. Department of Education · <span>TRIO Program</span> · <a href="admin.html" style="color:rgba(255,255,255,0.4);text-decoration:none;font-size:12px;font-weight:500;">Admin</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── GOOGLE SHEETS API ──
+  const API_URL = 'https://script.google.com/macros/s/AKfycbzywDyjo1Sh1ub2Ku5u4fQe3PQvI8K5SI2cAmWaevcwgNzqfHnWxu0M05_FINN3rc3KBw/exec';
+
+  async function fetchSheet(sheetKey) {
+    try {
+      const url = API_URL + '?' + new URLSearchParams({ action: 'getAll', sheet: sheetKey });
+      const res = await fetch(url);
+      const json = await res.json();
+      return json.data || [];
+    } catch(e) { console.warn('Could not load ' + sheetKey, e); return []; }
+  }
+
+  // ── RENDER GUIDES ──
+  async function loadDynamicGuides() {
+    const guides = await fetchSheet('guides');
+    if (!guides.length) return;
+    const grid = document.getElementById('guide-grid');
+    grid.innerHTML = '';
+    guides.forEach(g => {
+      const card = document.createElement('div');
+      card.className = 'guide-card';
+      card.dataset.cat = g.cat || 'career';
+      const catClass = g.cat === 'finance' ? 'finance' : g.cat === 'academic' ? 'academic' : 'career';
+      const tagClass = g.cat === 'finance' ? 'tag-finance' : g.cat === 'academic' ? 'tag-academic' : 'tag-career';
+      const tagLabel = g.cat === 'finance' ? 'Financial' : g.cat === 'academic' ? 'Academic' : 'Career';
+      const gid = (g.id||g._id||'').replace(/'/g,"\\'");
+      card.innerHTML = `
+        <div class="guide-card-top ${catClass}"></div>
+        <div class="guide-card-body">
+          <span class="guide-tag ${tagClass}">${tagLabel}</span>
+          <h3>${g.title||'Untitled Guide'}</h3>
+          <p>${g.desc||''}</p>
+          ${g.html ? `<button class="btn-sm" onclick="openGuide('${gid}')">Read Guide →</button>`
+                   : '<span class="btn-sm" style="opacity:.4;cursor:default;">Coming Soon</span>'}
+        </div>`;
+      grid.appendChild(card);
+    });
+    observeNewCards();
+  }
+
+  // ── RENDER NEWSLETTERS ──
+  async function loadDynamicNewsletters() {
+    const items = await fetchSheet('newsletters');
+    if (!items.length) return;
+    const list = document.querySelector('.newsletter-list');
+    if (!list) return;
+    list.innerHTML = '';
+    items.forEach(n => {
+      const d = n.date ? new Date(n.date + '-01') : null;
+      const month = d ? d.toLocaleString('default',{month:'short'}).toUpperCase() : '---';
+      const year  = d ? String(d.getFullYear()).slice(2) : '--';
+      const tags  = (n.tags||'').split(',').filter(Boolean).map(t =>
+        `<span class="badge badge-red">${t.trim()}</span>`).join('');
+      const nid = (n.id||n._id||'').replace(/'/g,"\\'");
+      const row = document.createElement('div');
+      row.className = 'newsletter-row';
+      row.innerHTML = `
+        <div class="nl-date"><div class="month">${month}</div><div class="year">${year}</div></div>
+        <div class="nl-info"><h3>${n.title||'Newsletter'}</h3><p>${n.desc||''}</p></div>
+        <div class="nl-tags">${tags}</div>
+        <div class="nl-action">${n.html
+          ? `<a href="#" onclick="openNewsletter('${nid}');return false;">Read →</a>`
+          : '<span style="opacity:.4;font-size:12px;">Coming soon</span>'}</div>`;
+      list.appendChild(row);
+    });
+    observeNewCards();
+  }
+
+  // ── RENDER SPOTLIGHTS ──
+  async function loadDynamicSpotlights() {
+    const items = await fetchSheet('spotlights');
+    if (!items.length) return;
+    const grid = document.querySelector('.spotlight-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    items.forEach(s => {
+      const initials = (s.name||'?').charAt(0).toUpperCase();
+      const color = s.color || 'r1';
+      const tags = (s.tags||'').split(',').filter(Boolean).map(t =>
+        `<span class="stag">${t.trim()}</span>`).join('');
+      const card = document.createElement('div');
+      card.className = 'spotlight-card';
+      card.innerHTML = `
+        <div class="spotlight-banner ${color}"><div class="spotlight-avatar">${initials}</div></div>
+        <div class="spotlight-body">
+          <h3>${s.name||''}</h3>
+          <p class="spotlight-role">${s.role||''}</p>
+          <p class="spotlight-quote">${s.quote||''}</p>
+          <div class="spotlight-tags">${tags}</div>
+        </div>`;
+      grid.appendChild(card);
+    });
+    observeNewCards();
+  }
+
+  // ── RENDER OPPORTUNITIES ──
+  async function loadDynamicOpportunities() {
+    const items = await fetchSheet('opportunities');
+    if (!items.length) return;
+    const grid = document.querySelector('.opp-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    const colors = ['#CC0033','#C8972A','#1A6B45','#1A3A8F','#6B3A8A','#C8420A','#0A7A6B','#5A3A8A'];
+    items.forEach((o, i) => {
+      const initials = (o.name||'?').charAt(0).toUpperCase();
+      const color = colors[i % colors.length];
+      const card = document.createElement('div');
+      card.className = 'opp-card';
+      card.innerHTML = `
+        <div class="opp-card-top">
+          <div class="opp-initials" style="background:${color}">${initials}</div>
+          <div class="opp-badges">
+            <span class="badge badge-red">${o.type||'Program'}</span>
+            ${o.badge ? `<span class="badge badge-gold">${o.badge}</span>` : ''}
+          </div>
+        </div>
+        <h3>${o.name||''}</h3>
+        <p>${o.desc||''}</p>
+        <a href="${o.url||'#'}" class="btn-outline" ${o.url?'target="_blank" rel="noopener"':''}>Learn More →</a>`;
+      grid.appendChild(card);
+    });
+    observeNewCards();
+  }
+
+  // ── RENDER ADMIN OPPORTUNITIES ──
+  async function loadAdminOpportunities() {
+    const items = await fetchSheet('opportunities');
+    const grid = document.getElementById('opportunities-grid');
+    const empty = document.getElementById('opportunities-empty');
+    if (!items.length) return;
+    grid.innerHTML = '';
+    const colors = ['#CC0033','#C8972A','#1A6B45','#1A3A8F','#6B3A8A','#C8420A','#0A7A6B','#5A3A8A'];
+    items.forEach((o, i) => {
+      const color = colors[i % colors.length];
+      const initials = (o.name||'?').charAt(0).toUpperCase();
+      const card = document.createElement('div');
+      card.className = 'program-tile';
+      card.innerHTML = `
+        <div class="tile-icon" style="background:${color};color:white;font-size:20px;font-weight:700;border-radius:12px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${initials}</div>
+        <div class="tile-body">
+          ${o.type ? `<span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--red);display:block;margin-bottom:4px;">${o.type}${o.badge ? ' · ' + o.badge : ''}</span>` : ''}
+          <h3 style="margin-bottom:4px;">${o.name||''}</h3>
+          <p style="font-size:13px;color:var(--text-light);line-height:1.5;">${o.desc||''}</p>
+          ${o.url ? `<a href="${o.url}" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;font-size:12px;font-weight:600;color:var(--red);text-decoration:none;">Learn More →</a>` : ''}
+        </div>`;
+      grid.appendChild(card);
+    });
+    observeNewCards();
+  }
+
+  // ── RENDER TEAM ──
+  async function loadDynamicTeam() {
+    const team = await fetchSheet('team');
+    const grid = document.getElementById('team-grid');
+    const empty = document.getElementById('team-empty');
+    if (!team.length) {
+      if (empty) empty.textContent = 'Team members coming soon.';
+      return;
+    }
+    grid.innerHTML = '';
+    team.forEach(m => {
+      const card = document.createElement('div');
+      card.className = 'program-tile';
+      card.innerHTML = `
+        <div class="tile-icon tile-red" style="font-size:28px;">${m.emoji || '👤'}</div>
+        <div class="tile-body">
+          <h3 style="margin-bottom:4px;">${m.name || ''}</h3>
+          <p style="font-size:12px;font-weight:600;color:var(--red);margin-bottom:6px;">${m.role || ''}</p>
+          ${m.email ? `<p style="font-size:12px;color:var(--text-light);">✉️ <a href="mailto:${m.email}" style="color:var(--red);text-decoration:none;">${m.email}</a></p>` : ''}
+          ${m.bio ? `<p style="font-size:12px;color:var(--text-light);margin-top:6px;line-height:1.5;">${m.bio}</p>` : ''}
+        </div>`;
+      grid.appendChild(card);
+    });
+  }
+
+  // ── RENDER EVENTS ──
+  async function loadDynamicEvents() {
+    const upcoming = await fetchSheet('upcoming');
+    const past     = await fetchSheet('past');
+
+    const upcomingGrid = document.getElementById('upcoming-events-grid');
+    const pastGrid     = document.getElementById('past-events-grid');
+
+    function cleanEventTime(raw) {
+      if (!raw) return '';
+      // Strip full date strings from Google Calendar like "Fri Apr 17 2026 00:00:00 GMT-0400 (Eastern Daylight Time) · "
+      // Keep only the part that looks like a time range e.g. "2:00–3:00 PM EST"
+      let t = raw
+        .replace(/[A-Z][a-z]{2}\s+[A-Z][a-z]{2}\s+\d{1,2}\s+\d{4}\s+\d{2}:\d{2}:\d{2}\s+GMT[+-]\d{4}\s*\([^)]*\)\s*·?\s*/g, '')
+        .replace(/\b(GMT|UTC|EDT|CDT|PDT|MDT|CST|PST|MST|ET)\b/gi, '')
+        .replace(/Eastern Daylight Time|Eastern Standard Time/gi, '')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+      // Remove leading · or –
+      t = t.replace(/^[·–\-\s]+/, '').trim();
+      // Append EST if no timezone mentioned
+      if (t && !/EST/i.test(t)) t = t + ' EST';
+      return t;
+    }
+
+    function cleanEventDate(raw) {
+      if (!raw) return '';
+      // If it looks like a full Google Calendar date, extract just date portion
+      const match = raw.match(/([A-Z][a-z]{2}\s+[A-Z][a-z]{2}\s+\d{1,2}\s+\d{4})/);
+      if (match) return match[1];
+      return raw;
+    }
+
+    if (upcomingGrid) {
+      if (upcoming.length) {
+        upcomingGrid.innerHTML = upcoming.map(e => {
+          const date = cleanEventDate(e.date);
+          const time = cleanEventTime(e.time);
+          const meta = [date, time, e.location].filter(Boolean).join(' · ');
+          return `
+          <div class="program-tile" style="border-left:4px solid var(--green);">
+            <div class="tile-body">
+              <h3>${e.name||''}</h3>
+              ${meta ? `<p style="font-size:13px;color:var(--text-light);margin-top:4px;">${meta}</p>` : ''}
+              ${e.desc ? `<p style="margin-top:4px;font-size:12px;">${e.desc}</p>` : ''}
+              ${e.url ? `<a href="${e.url}" target="_blank" style="font-size:12px;color:var(--red);font-weight:600;text-decoration:none;display:inline-block;margin-top:6px;">RSVP →</a>` : ''}
+            </div>
+          </div>`;
+        }).join('');
+      }
+    }
+
+    if (pastGrid) {
+      if (past.length) {
+        pastGrid.innerHTML = past.map(e => {
+          const date = cleanEventDate(e.date);
+          const meta = [date, e.cat].filter(Boolean).join(' · ');
+          return `
+          <div class="program-tile" style="opacity:.8;">
+            <div class="tile-body">
+              <h3>${e.name||''}</h3>
+              ${meta ? `<p style="font-size:13px;color:var(--text-light);margin-top:4px;">${meta}</p>` : ''}
+              ${e.desc ? `<p style="margin-top:4px;font-size:12px;">${e.desc}</p>` : ''}
+            </div>
+          </div>`;
+        }).join('');
+      }
+    }
+    observeNewCards();
+  }
+
+  // ══════════════════════════════════════════════
+  // SEARCH
+  // ══════════════════════════════════════════════
+
+  const SEARCH_INDEX = [
+    // Navigation / Sections
+    { label: 'About SSS / TRIO Program', desc: 'What is Student Support Services?', icon: '🎓', action: () => scrollTo('#about') },
+    { label: 'Upcoming Events', desc: 'Workshops and programs happening soon', icon: '📅', action: () => scrollTo('#upcoming-events') },
+    { label: 'Past Events', desc: 'Archive of previous SSS events', icon: '🗂', action: () => scrollTo('#past-events') },
+    { label: 'Campus Resources', desc: 'Academic, wellness, jobs, and more at SJU', icon: '🏫', action: () => scrollTo('#resources') },
+    { label: 'Career Services Tools', desc: 'Handshake, Forage, Big Interview, and more', icon: '💼', action: () => scrollTo('#career-services') },
+    { label: 'Opportunities', desc: 'Fellowships, internships, and programs', icon: '🚀', action: () => scrollTo('#opportunities-admin') },
+    { label: 'Off-Campus Resources', desc: 'External fellowships and programs', icon: '🌍', action: () => scrollTo('#opportunities') },
+    { label: 'Scholarship Support', desc: 'Financial aid, appeals, and scholarships', icon: '💰', action: () => scrollTo('#scholarships') },
+    { label: 'How-To Guides', desc: 'Step-by-step guides for college life', icon: '📖', action: () => scrollTo('#guides') },
+    { label: 'Student Spotlights', desc: 'Inspiring stories from SSS students', icon: '⭐', action: () => scrollTo('#spotlights') },
+    { label: 'Newsletters', desc: 'Monthly SSS newsletters', icon: '📰', action: () => scrollTo('#newsletters') },
+    { label: 'Meet the Team', desc: 'SSS staff and contacts', icon: '👥', action: () => scrollTo('#meet-the-team') },
+
+    // Campus Resources
+    { label: 'Free Counseling (CCC)', desc: 'Center for Counseling & Consultation — free mental health services', icon: '🧠', action: () => { scrollTo('#resources'); } },
+    { label: '24/7 Mental Health Helpline', desc: '718-990-6352 — available anytime', icon: '🆘', action: () => { scrollTo('#resources'); } },
+    { label: 'Student Health Services', desc: 'Free medical care — DaSilva Hall', icon: '🏥', action: () => scrollTo('#resources') },
+    { label: 'Office of Disability Services (ODS)', desc: 'Accommodations — Marillac Hall Rm 134', icon: '♿', action: () => scrollTo('#resources') },
+    { label: 'SOAR — Sexual Violence Support', desc: 'Confidential support, 718-990-8484', icon: '💜', action: () => scrollTo('#resources') },
+    { label: 'Campus Recreation (CREC)', desc: 'Fitness center, intramurals, sports', icon: '🏋️', action: () => scrollTo('#resources') },
+    { label: 'Inclusivity Resource Center (IRC)', desc: 'Safe, inclusive space for all students', icon: '🌈', action: () => scrollTo('#resources') },
+    { label: 'Financial Aid Office', desc: 'Tobin College Building — Queens Campus', icon: '🎓', action: () => scrollTo('#resources') },
+    { label: 'Study Rooms', desc: 'St. John\'s Hall, Room 103B', icon: '📖', action: () => scrollTo('#resources') },
+    { label: 'Printing & Computer Lab', desc: 'St. John\'s Hall, Room 107A', icon: '🖨️', action: () => scrollTo('#resources') },
+    { label: 'Tutoring', desc: 'University Learning Commons', icon: '✏️', action: () => scrollTo('#resources') },
+    { label: 'Writing Center', desc: 'Free writing support for all students', icon: '✍️', action: () => scrollTo('#resources') },
+    { label: 'Food Pantry', desc: 'Free food resources for students in need', icon: '🍎', action: () => scrollTo('#resources') },
+    { label: 'Shuttle Van', desc: 'Free Public Safety shuttle on campus', icon: '🚌', action: () => scrollTo('#resources') },
+    { label: 'GrubHub+ at SJU', desc: 'Learn how to use your GrubHub benefit', icon: '🍔', action: () => scrollTo('#resources') },
+    { label: 'Deans & Academic Offices', desc: 'Contact info for all SJU colleges', icon: '🎓', action: () => document.getElementById('deans-modal').classList.add('open') },
+
+    // Career Tools
+    { label: 'Handshake', desc: 'SJU recruiting platform — jobs & internships', icon: '🤝', action: () => window.open('https://stjohns.joinhandshake.com/login','_blank') },
+    { label: 'Parker Dewey', desc: 'Paid micro-internships', icon: '💼', action: () => window.open('https://info.parkerdewey.com/student/stjohns','_blank') },
+    { label: 'Forage', desc: 'Virtual work experience programs', icon: '🌱', action: () => window.open('https://www.theforage.com/landing/st-johns-university-7t43j/st-johns-university-k40f','_blank') },
+    { label: 'Big Interview', desc: 'Practice interviews with video feedback', icon: '🎤', action: () => window.open('https://careerservices.stjohns.edu/resources/big-interview/','_blank') },
+    { label: 'LinkedIn Career Services', desc: 'Connect and build your network', icon: '🔗', action: () => window.open('https://www.linkedin.com/company/stjohnscareerservices/','_blank') },
+    { label: 'Focus2 Career Assessment', desc: 'Discover careers that match your strengths', icon: '🧭', action: () => window.open('https://careerservices.stjohns.edu/account/login/?redirect_to=%2Fresources%2Ffocus2%2F&restricted=true','_blank') },
+    { label: 'Interstride', desc: 'Job search for international students', icon: '🌍', action: () => window.open('https://student.interstride.com/login','_blank') },
+    { label: 'Career Communities at SJU', desc: 'Explore career paths by interest', icon: '🗺️', action: () => window.open('https://careerservices.stjohns.edu/channels/what-are-communities/','_blank') },
+
+    // Grants
+    { label: 'Tuition Support Grant', desc: 'Request a supplemental SSS grant', icon: '💰', action: () => document.getElementById('grants-modal').classList.add('open') },
+    { label: 'Financial Aid Appeal', desc: 'Appeal your financial aid every semester', icon: '📩', action: () => scrollTo('#scholarships') },
+
+    // Quick actions
+    { label: 'SSS Instagram', desc: '@sssprogram_sju', icon: '📸', action: () => window.open('https://www.instagram.com/sssprogram_sju','_blank') },
+    { label: 'St. John\'s Sign On', desc: 'Access email, Canvas, and all SJU platforms', icon: '🔐', action: () => window.open('https://signon.stjohns.edu/','_blank') },
+    { label: 'Financial Aid Website', desc: 'stjohns.edu — tuition and financial aid', icon: '💳', action: () => window.open('https://www.stjohns.edu/admission/tuition-and-financial-aid','_blank') },
+  ];
+
+  const SUGGESTED = [
+    'Upcoming Events', 'Tuition Support Grant', 'Handshake', 'Free Counseling (CCC)',
+    'Study Rooms', 'How-To Guides', 'Scholarship Support', 'Printing & Computer Lab',
+    'Career Communities at SJU', 'Deans & Academic Offices'
+  ];
+
+  function scrollTo(id) {
+    const el = document.querySelector(id);
+    if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    hideSearchDropdown();
+    document.getElementById('site-search').value = '';
+  }
+
+  function showSearchDropdown() {
+    const dropdown = document.getElementById('search-dropdown');
+    const suggestionsEl = document.getElementById('search-suggestions');
+    const query = document.getElementById('site-search').value.trim();
+    if (!query) {
+      // Show recommended searches
+      suggestionsEl.innerHTML = `
+        <div style="padding:10px 16px 6px;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#aaa;">Recommended Searches</div>
+        ${SUGGESTED.map(label => {
+          const item = SEARCH_INDEX.find(i => i.label === label);
+          if (!item) return '';
+          return `<div class="search-item" onclick="runSearch('${label.replace(/'/g,"\\'")}')">
+            <span style="font-size:18px;width:28px;text-align:center;">${item.icon}</span>
+            <div><div style="font-size:13px;font-weight:500;color:#222;">${item.label}</div><div style="font-size:11px;color:#888;">${item.desc}</div></div>
+          </div>`;
+        }).join('')}`;
+    }
+    dropdown.style.display = 'block';
+  }
+
+  function hideSearchDropdown() {
+    document.getElementById('search-dropdown').style.display = 'none';
+  }
+
+  function handleSearchInput(query) {
+    const suggestionsEl = document.getElementById('search-suggestions');
+    const dropdown = document.getElementById('search-dropdown');
+    dropdown.style.display = 'block';
+    if (!query.trim()) { showSearchDropdown(); return; }
+
+    const q = query.toLowerCase();
+    const results = SEARCH_INDEX.filter(item =>
+      item.label.toLowerCase().includes(q) ||
+      item.desc.toLowerCase().includes(q)
+    ).slice(0, 8);
+
+    if (!results.length) {
+      suggestionsEl.innerHTML = `<div style="padding:20px;text-align:center;color:#aaa;font-size:13px;">No results for "<strong style="color:#222;">${query}</strong>"</div>`;
+      return;
+    }
+
+    suggestionsEl.innerHTML = `
+      <div style="padding:10px 16px 6px;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#aaa;">Results</div>
+      ${results.map(item => `
+        <div class="search-item" onclick="(${item.action.toString()})(); hideSearchDropdown(); document.getElementById('site-search').value='';">
+          <span style="font-size:18px;width:28px;text-align:center;">${item.icon}</span>
+          <div><div style="font-size:13px;font-weight:500;color:#222;">${item.label}</div><div style="font-size:11px;color:#888;">${item.desc}</div></div>
+        </div>`).join('')}`;
+  }
+
+  function runSearch(label) {
+    const item = SEARCH_INDEX.find(i => i.label === label);
+    if (item) { item.action(); hideSearchDropdown(); document.getElementById('site-search').value = ''; }
+  }
+
+  // Search item hover styles
+  const searchStyle = document.createElement('style');
+  searchStyle.textContent = `.search-item { display:flex; align-items:center; gap:12px; padding:10px 16px; cursor:pointer; transition:background .15s; } .search-item:hover { background:#fff5f5; }`;
+  document.head.appendChild(searchStyle);
+
+  // Enter key support
+  document.getElementById('site-search').addEventListener('keydown', e => {
+    if (e.key === 'Escape') { hideSearchDropdown(); document.getElementById('site-search').blur(); }
+    if (e.key === 'Enter') {
+      const q = e.target.value.trim().toLowerCase();
+      const match = SEARCH_INDEX.find(i => i.label.toLowerCase().includes(q) || i.desc.toLowerCase().includes(q));
+      if (match) { match.action(); hideSearchDropdown(); e.target.value = ''; }
+    }
+  });
+  let _guideCache = [], _nlCache = [];
+
+  async function openGuide(id) {
+    if (!_guideCache.length) _guideCache = await fetchSheet('guides');
+    const item = _guideCache.find(g => (g.id||g._id) === id);
+    if (item && item.html) showContentModal(item.title, item.html);
+  }
+
+  async function openNewsletter(id) {
+    if (!_nlCache.length) _nlCache = await fetchSheet('newsletters');
+    const item = _nlCache.find(n => (n.id||n._id) === id);
+    if (item && item.html) showContentModal(item.title, item.html);
+  }
+
+  function showContentModal(title, html) {
+    let modal = document.getElementById('content-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'content-modal';
+      modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:5000;display:flex;align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto;';
+      modal.innerHTML = `<div style="background:white;border-radius:20px;padding:32px;max-width:760px;width:100%;margin:auto;position:relative;">
+        <button onclick="document.getElementById('content-modal').style.display='none'" style="position:absolute;top:16px;right:16px;background:#f2efe9;border:none;border-radius:8px;width:32px;height:32px;font-size:18px;cursor:pointer;">✕</button>
+        <h2 id="content-modal-title" style="font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;margin-bottom:20px;padding-right:40px;"></h2>
+        <div id="content-modal-body" style="font-size:14px;line-height:1.7;"></div>
+      </div>`;
+      document.body.appendChild(modal);
+      modal.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+    }
+    document.getElementById('content-modal-title').textContent = title;
+    document.getElementById('content-modal-body').innerHTML = html;
+    modal.style.display = 'flex';
+  }
+
+  function observeNewCards() {
+    document.querySelectorAll('.guide-card,.opp-card,.newsletter-row,.spotlight-card,.program-tile').forEach(el => {
+      el.style.transition = 'opacity .5s ease, transform .5s ease, box-shadow .2s, border-color .2s';
+      observer.observe(el);
+    });
+  }
+
+  function filterGuides(cat, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.guide-card').forEach(card => {
+      card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+    });
+  }
+
+  // ── SCROLL FADE-IN ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.guide-card,.opp-card,.newsletter-row,.spotlight-card,.resource-card,.program-tile').forEach(el => {
+    el.style.transition = 'opacity .5s ease, transform .5s ease, box-shadow .2s, border-color .2s';
+    observer.observe(el);
+  });
+
+  // ── LOAD ALL DYNAMIC CONTENT ──
+  loadDynamicGuides();
+  loadDynamicNewsletters();
+  loadDynamicSpotlights();
+  loadDynamicOpportunities();
+  loadDynamicEvents();
+  loadDynamicTeam();
+  loadAdminOpportunities();
+
+  // ── PASSWORD GATE ──
+  (function() {
+    const CORRECT = 'sssstudent101';
+    const SESSION_KEY = 'sss_unlocked';
+    if (sessionStorage.getItem(SESSION_KEY) === '1') {
+      document.getElementById('password-gate').style.display = 'none';
+    } else {
+      document.body.classList.add('locked');
+    }
+    document.getElementById('gate-pw').addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkPassword();
+    });
+    window.checkPassword = function() {
+      const val = document.getElementById('gate-pw').value;
+      const err = document.getElementById('gate-error');
+      if (val === CORRECT) {
+        sessionStorage.setItem(SESSION_KEY, '1');
+        const gate = document.getElementById('password-gate');
+        gate.style.transition = 'opacity .4s ease'; gate.style.opacity = '0';
+        setTimeout(() => { gate.style.display = 'none'; }, 400);
+        document.body.classList.remove('locked');
+      } else {
+        err.classList.add('visible');
+        document.getElementById('gate-pw').value = '';
+        document.getElementById('gate-pw').focus();
+        setTimeout(() => err.classList.remove('visible'), 3000);
+      }
+    };
+    window.togglePw = function() {
+      const input = document.getElementById('gate-pw');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    };
+  })();
+</script>
+
+</body>
+</html>
