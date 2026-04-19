@@ -1199,31 +1199,34 @@
     <a href="#past-events">Past Events</a>
     <a href="#resources">Campus Resources</a>
   </div>
-  <!-- SEARCH BAR -->
-  <div style="background:#1a1a1a;padding:8px 16px;border-top:1px solid rgba(255,255,255,0.07);">
-    <div style="max-width:1080px;margin:auto;position:relative;" id="search-container">
-      <div style="position:relative;">
-        <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;opacity:0.5;">🔍</span>
-        <input
-          id="site-search"
-          type="text"
-          placeholder="Search resources, guides, events..."
-          autocomplete="off"
-          style="width:100%;padding:9px 12px 9px 36px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:white;font-size:13px;outline:none;box-sizing:border-box;transition:border .2s;"
-          onfocus="showSearchDropdown()"
-          oninput="handleSearchInput(this.value)"
-          onblur="setTimeout(()=>hideSearchDropdown(),200)"
-        />
-      </div>
-      <!-- DROPDOWN -->
-      <div id="search-dropdown" style="display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.2);z-index:999;overflow:hidden;max-height:380px;overflow-y:auto;">
-        <div id="search-suggestions"></div>
-      </div>
+  <!-- COMMAND PALETTE TRIGGER -->
+  <div style="background:#1a1a1a;padding:7px 16px;border-top:1px solid rgba(255,255,255,0.07);">
+    <div style="max-width:1080px;margin:auto;">
+      <button onclick="openPalette()" style="width:100%;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:8px 14px;cursor:pointer;color:rgba(255,255,255,0.45);font-size:13px;font-family:inherit;transition:background 0.2s,border-color 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.11)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
+        <span style="font-size:14px;">🔍</span>
+        <span style="flex:1;text-align:left;">Search resources, guides, events...</span>
+        <span style="font-size:11px;background:rgba(255,255,255,0.1);padding:2px 8px;border-radius:6px;letter-spacing:0.05em;">⌘K</span>
+      </button>
     </div>
   </div>
 </nav>
 
-<main id="main-content">
+<!-- COMMAND PALETTE OVERLAY -->
+<div id="cmd-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99999;align-items:flex-start;justify-content:center;padding-top:80px;backdrop-filter:blur(4px);" onclick="if(event.target===this)closePalette()">
+  <div style="background:white;border-radius:18px;width:min(620px,94vw);box-shadow:0 24px 80px rgba(0,0,0,0.3);overflow:hidden;display:flex;flex-direction:column;max-height:70vh;">
+    <!-- Input -->
+    <div style="display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #f0f0f0;">
+      <span style="font-size:18px;color:#aaa;">🔍</span>
+      <input id="cmd-input" type="text" placeholder="Where do you want to go?" autocomplete="off"
+        style="flex:1;border:none;outline:none;font-size:16px;color:#1a1a2e;font-family:inherit;background:transparent;"
+        oninput="filterPalette(this.value)"
+      />
+      <kbd onclick="closePalette()" style="background:#f0f0f0;border:none;padding:4px 10px;border-radius:6px;font-size:12px;color:#888;cursor:pointer;font-family:inherit;">Esc</kbd>
+    </div>
+    <!-- Results -->
+    <div id="cmd-results" style="overflow-y:auto;max-height:calc(70vh - 65px);"></div>
+  </div>
+</div><main id="main-content">
 
   <!-- WELCOME -->
   <div class="welcome-band">
@@ -1571,7 +1574,7 @@
       </div>
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
         <button id="slot-spin" onclick="spinSlot()" style="background:var(--red);color:white;border:none;padding:11px 28px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:transform 0.1s,background 0.2s;">🎰 Spin!</button>
-        <a id="slot-visit" href="#resources" style="background:rgba(255,255,255,0.1);color:white;border:none;padding:11px 28px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block;transition:background 0.2s;">Visit →</a>
+        <a id="slot-visit" href="#resources" onclick="handleSlotVisit(event)" style="background:rgba(255,255,255,0.1);color:white;border:none;padding:11px 28px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block;transition:background 0.2s;">Visit →</a>
       </div>
     </div>
 
@@ -3064,140 +3067,174 @@ Thank you,
   // SEARCH
   // ══════════════════════════════════════════════
 
-  const SEARCH_INDEX = [
-    // Navigation / Sections
-    { label: 'About SSS / TRIO Program', desc: 'What is Student Support Services?', icon: '🎓', action: () => scrollTo('#about') },
-    { label: 'Upcoming Events', desc: 'Workshops and programs happening soon', icon: '📅', action: () => scrollTo('#upcoming-events') },
-    { label: 'Past Events', desc: 'Archive of previous SSS events', icon: '🗂', action: () => scrollTo('#past-events') },
-    { label: 'Campus Resources', desc: 'Academic, wellness, jobs, and more at SJU', icon: '🏫', action: () => scrollTo('#resources') },
-    { label: 'Career Services Tools', desc: 'Handshake, Forage, Big Interview, and more', icon: '💼', action: () => scrollTo('#career-services') },
-    { label: 'Opportunities', desc: 'Fellowships, internships, and programs', icon: '🚀', action: () => scrollTo('#opportunities-admin') },
-    { label: 'Off-Campus Resources', desc: 'External fellowships and programs', icon: '🌍', action: () => scrollTo('#opportunities') },
-    { label: 'Scholarship Support', desc: 'Financial aid, appeals, and scholarships', icon: '💰', action: () => scrollTo('#scholarships') },
-    { label: 'How-To Guides', desc: 'Step-by-step guides for college life', icon: '📖', action: () => scrollTo('#guides') },
-    { label: 'Student Spotlights', desc: 'Inspiring stories from SSS students', icon: '⭐', action: () => scrollTo('#spotlights') },
-    { label: 'Newsletters', desc: 'Monthly SSS newsletters', icon: '📰', action: () => scrollTo('#newsletters') },
-    { label: 'Meet the Team', desc: 'SSS staff and contacts', icon: '👥', action: () => scrollTo('#meet-the-team') },
-
+  // ══════════════════════════════════════════════
+  // COMMAND PALETTE (⌘K)
+  // ══════════════════════════════════════════════
+  const CMD_INDEX = [
+    // Sections
+    { label: 'Meet the Team',          icon: '👥', desc: 'Your SSS staff contacts',                    group: 'Sections',         action: () => jumpTo('meet-the-team') },
+    { label: 'About SSS / TRIO',       icon: '🎓', desc: 'What is Student Support Services?',          group: 'Sections',         action: () => jumpTo('about') },
+    { label: 'Upcoming Events',        icon: '📅', desc: 'Workshops & programs this semester',         group: 'Sections',         action: () => jumpTo('upcoming-events') },
+    { label: 'Past Events',            icon: '🗂',  desc: 'Archive of previous SSS events',            group: 'Sections',         action: () => jumpTo('past-events') },
+    { label: 'Campus Resources',       icon: '🏫', desc: 'Health, tutoring, jobs & more at SJU',      group: 'Sections',         action: () => jumpTo('resources') },
+    { label: 'Career Services Tools',  icon: '💼', desc: 'Handshake, Big Interview, Forage & more',   group: 'Sections',         action: () => jumpTo('career-services') },
+    { label: 'Opportunities',          icon: '🚀', desc: 'Fellowships & programs posted by SSS',      group: 'Sections',         action: () => jumpTo('opportunities-admin') },
+    { label: 'Off-Campus Resources',   icon: '🌍', desc: 'Competitive external programs',             group: 'Sections',         action: () => jumpTo('opportunities') },
+    { label: 'Scholarship Support',    icon: '💰', desc: 'Financial aid, appeals & scholarships',     group: 'Sections',         action: () => jumpTo('scholarships') },
+    { label: 'How-To Guides',          icon: '📖', desc: '20+ step-by-step guides for college life',  group: 'Sections',         action: () => jumpTo('guides') },
+    { label: 'Student Spotlights',     icon: '⭐', desc: 'Inspiring stories from SSS students',       group: 'Sections',         action: () => jumpTo('spotlights') },
+    { label: 'Newsletters',            icon: '📰', desc: 'Monthly SSS newsletters',                   group: 'Sections',         action: () => jumpTo('newsletters') },
     // Campus Resources
-    { label: 'Free Counseling (CCC)', desc: 'Center for Counseling & Consultation — free mental health services', icon: '🧠', action: () => { scrollTo('#resources'); } },
-    { label: '24/7 Mental Health Helpline', desc: '718-990-6352 — available anytime', icon: '🆘', action: () => { scrollTo('#resources'); } },
-    { label: 'Student Health Services', desc: 'Free medical care — DaSilva Hall', icon: '🏥', action: () => scrollTo('#resources') },
-    { label: 'Office of Disability Services (ODS)', desc: 'Accommodations — Marillac Hall Rm 134', icon: '♿', action: () => scrollTo('#resources') },
-    { label: 'SOAR — Sexual Violence Support', desc: 'Confidential support, 718-990-8484', icon: '💜', action: () => scrollTo('#resources') },
-    { label: 'Campus Recreation (CREC)', desc: 'Fitness center, intramurals, sports', icon: '🏋️', action: () => scrollTo('#resources') },
-    { label: 'Inclusivity Resource Center (IRC)', desc: 'Safe, inclusive space for all students', icon: '🌈', action: () => scrollTo('#resources') },
-    { label: 'Financial Aid Office', desc: 'Tobin College Building — Queens Campus', icon: '🎓', action: () => scrollTo('#resources') },
-    { label: 'Study Rooms', desc: 'St. John\'s Hall, Room 103B', icon: '📖', action: () => scrollTo('#resources') },
-    { label: 'Printing & Computer Lab', desc: 'St. John\'s Hall, Room 107A', icon: '🖨️', action: () => scrollTo('#resources') },
-    { label: 'Tutoring', desc: 'University Learning Commons', icon: '✏️', action: () => scrollTo('#resources') },
-    { label: 'Writing Center', desc: 'Free writing support for all students', icon: '✍️', action: () => scrollTo('#resources') },
-    { label: 'Food Pantry', desc: 'Free food resources for students in need', icon: '🍎', action: () => scrollTo('#resources') },
-    { label: 'Shuttle Van', desc: 'Free Public Safety shuttle on campus', icon: '🚌', action: () => scrollTo('#resources') },
-    { label: 'GrubHub+ at SJU', desc: 'Learn how to use your GrubHub benefit', icon: '🍔', action: () => scrollTo('#resources') },
-    { label: 'Deans & Academic Offices', desc: 'Contact info for all SJU colleges', icon: '🎓', action: () => document.getElementById('deans-modal').classList.add('open') },
-
+    { label: 'Free Counseling (CCC)',  icon: '🧠', desc: 'Confidential mental health — Marillac 130', group: 'Campus Resources', action: () => jumpTo('resources') },
+    { label: '24/7 Mental Health Line',icon: '🆘', desc: '718-990-6352 — available anytime',          group: 'Campus Resources', action: () => jumpTo('resources') },
+    { label: 'Student Health (SHS)',   icon: '🏥', desc: 'Free medical care — DaSilva Hall',          group: 'Campus Resources', action: () => jumpTo('resources') },
+    { label: 'Disability Services',    icon: '♿', desc: 'Accommodations — Marillac Hall 134',        group: 'Campus Resources', action: () => jumpTo('resources') },
+    { label: 'SOAR',                   icon: '💜', desc: 'Sexual violence support — 718-990-8484',    group: 'Campus Resources', action: () => jumpTo('resources') },
+    { label: 'Campus Rec (CREC)',      icon: '🏋️', desc: 'Fitness center & intramurals',             group: 'Campus Resources', action: () => jumpTo('resources') },
+    { label: 'Study Rooms',            icon: '📖', desc: "St. John's Hall, Room 103B",               group: 'Campus Resources', action: () => jumpTo('resources') },
+    { label: 'Printing & Computer Lab',icon: '🖨️', desc: "St. John's Hall, Room 107A",               group: 'Campus Resources', action: () => jumpTo('resources') },
+    { label: 'Inclusivity Center IRC', icon: '🌈', desc: 'Safe, inclusive space for all students',    group: 'Campus Resources', action: () => jumpTo('resources') },
+    { label: 'Financial Aid Office',   icon: '🎓', desc: 'Tobin Building — Queens Campus',            group: 'Campus Resources', action: () => window.open('https://www.stjohns.edu/admission/tuition-and-financial-aid','_blank') },
+    { label: 'Deans & Academic Offices',icon:'🏛️', desc: 'Contact info for all SJU colleges',        group: 'Campus Resources', action: () => { jumpTo('resources'); setTimeout(()=>document.getElementById('deans-modal').classList.add('open'),500); } },
     // Career Tools
-    { label: 'Handshake', desc: 'SJU recruiting platform — jobs & internships', icon: '🤝', action: () => window.open('https://stjohns.joinhandshake.com/login','_blank') },
-    { label: 'Parker Dewey', desc: 'Paid micro-internships', icon: '💼', action: () => window.open('https://info.parkerdewey.com/student/stjohns','_blank') },
-    { label: 'Forage', desc: 'Virtual work experience programs', icon: '🌱', action: () => window.open('https://www.theforage.com/landing/st-johns-university-7t43j/st-johns-university-k40f','_blank') },
-    { label: 'Big Interview', desc: 'Practice interviews with video feedback', icon: '🎤', action: () => window.open('https://careerservices.stjohns.edu/resources/big-interview/','_blank') },
-    { label: 'LinkedIn Career Services', desc: 'Connect and build your network', icon: '🔗', action: () => window.open('https://www.linkedin.com/company/stjohnscareerservices/','_blank') },
-    { label: 'Focus2 Career Assessment', desc: 'Discover careers that match your strengths', icon: '🧭', action: () => window.open('https://careerservices.stjohns.edu/account/login/?redirect_to=%2Fresources%2Ffocus2%2F&restricted=true','_blank') },
-    { label: 'Interstride', desc: 'Job search for international students', icon: '🌍', action: () => window.open('https://student.interstride.com/login','_blank') },
-    { label: 'Career Communities at SJU', desc: 'Explore career paths by interest', icon: '🗺️', action: () => window.open('https://careerservices.stjohns.edu/channels/what-are-communities/','_blank') },
-
-    // Grants
-    { label: 'Tuition Support Grant', desc: 'Request a supplemental SSS grant', icon: '💰', action: () => document.getElementById('grants-modal').classList.add('open') },
-    { label: 'Financial Aid Appeal', desc: 'Appeal your financial aid every semester', icon: '📩', action: () => scrollTo('#scholarships') },
-
-    // Quick actions
-    { label: 'SSS Instagram', desc: '@sssprogram_sju', icon: '📸', action: () => window.open('https://www.instagram.com/sssprogram_sju','_blank') },
-    { label: 'St. John\'s Sign On', desc: 'Access email, Canvas, and all SJU platforms', icon: '🔐', action: () => window.open('https://signon.stjohns.edu/','_blank') },
-    { label: 'Financial Aid Website', desc: 'stjohns.edu — tuition and financial aid', icon: '💳', action: () => window.open('https://www.stjohns.edu/admission/tuition-and-financial-aid','_blank') },
+    { label: 'Handshake',              icon: '🤝', desc: 'SJU jobs & internships platform',           group: 'Career Tools',     action: () => window.open('https://stjohns.joinhandshake.com/login','_blank') },
+    { label: 'Parker Dewey',           icon: '💼', desc: 'Paid micro-internships',                    group: 'Career Tools',     action: () => window.open('https://info.parkerdewey.com/student/stjohns','_blank') },
+    { label: 'Forage',                 icon: '🌱', desc: 'Virtual work experience programs',          group: 'Career Tools',     action: () => window.open('https://www.theforage.com/landing/st-johns-university-7t43j/st-johns-university-k40f','_blank') },
+    { label: 'Big Interview',          icon: '🎤', desc: 'Practice interviews with video feedback',   group: 'Career Tools',     action: () => window.open('https://careerservices.stjohns.edu/resources/big-interview/','_blank') },
+    { label: 'Focus2',                 icon: '🧭', desc: 'Career assessment tool',                    group: 'Career Tools',     action: () => window.open('https://careerservices.stjohns.edu/account/login/?redirect_to=%2Fresources%2Ffocus2%2F&restricted=true','_blank') },
+    { label: 'Interstride',            icon: '🌍', desc: 'Job search for international students',     group: 'Career Tools',     action: () => window.open('https://student.interstride.com/login','_blank') },
+    { label: 'LinkedIn Career Services',icon:'🔗', desc: 'Connect and build your network',            group: 'Career Tools',     action: () => window.open('https://www.linkedin.com/company/stjohnscareerservices/','_blank') },
+    // Quick Actions
+    { label: 'Tuition Support Grant',  icon: '💰', desc: 'See requirements & request a grant',        group: 'Quick Actions',    action: () => document.getElementById('grants-modal').classList.add('open') },
+    { label: 'SJU Sign On',            icon: '🔐', desc: 'Access email, Canvas & all SJU platforms',  group: 'Quick Actions',    action: () => window.open('https://signon.stjohns.edu/','_blank') },
+    { label: 'Financial Aid Appeal',   icon: '📩', desc: 'Appeal your financial aid',                 group: 'Quick Actions',    action: () => window.open('https://stjohnsfinancialservices.docmgt.cloud/v4/public/Form/1','_blank') },
+    { label: 'SSS Instagram',          icon: '📸', desc: '@sssprogram_sju',                           group: 'Quick Actions',    action: () => window.open('https://www.instagram.com/sssprogram_sju','_blank') },
   ];
 
-  const SUGGESTED = [
-    'Upcoming Events', 'Tuition Support Grant', 'Handshake', 'Free Counseling (CCC)',
-    'Study Rooms', 'How-To Guides', 'Scholarship Support', 'Printing & Computer Lab',
-    'Career Communities at SJU', 'Deans & Academic Offices'
-  ];
+  const CMD_PINNED = ['Upcoming Events','Tuition Support Grant','Handshake','Free Counseling (CCC)','Study Rooms','How-To Guides','Scholarship Support','Career Services Tools'];
 
-  function scrollTo(id) {
-    const el = document.querySelector(id);
-    if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-    hideSearchDropdown();
-    document.getElementById('site-search').value = '';
+  function jumpTo(id) {
+    closePalette();
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 120);
   }
 
-  function showSearchDropdown() {
-    const dropdown = document.getElementById('search-dropdown');
-    const suggestionsEl = document.getElementById('search-suggestions');
-    const query = document.getElementById('site-search').value.trim();
-    if (!query) {
-      // Show recommended searches
-      suggestionsEl.innerHTML = `
-        <div style="padding:10px 16px 6px;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#aaa;">Recommended Searches</div>
-        ${SUGGESTED.map(label => {
-          const item = SEARCH_INDEX.find(i => i.label === label);
-          if (!item) return '';
-          return `<div class="search-item" onclick="runSearch('${label.replace(/'/g,"\\'")}')">
-            <span style="font-size:18px;width:28px;text-align:center;">${item.icon}</span>
-            <div><div style="font-size:13px;font-weight:500;color:#222;">${item.label}</div><div style="font-size:11px;color:#888;">${item.desc}</div></div>
-          </div>`;
-        }).join('')}`;
+  function openPalette() {
+    const overlay = document.getElementById('cmd-overlay');
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => { overlay.style.opacity = '1'; });
+    setTimeout(() => document.getElementById('cmd-input').focus(), 80);
+    renderPaletteResults('');
+  }
+
+  function closePalette() {
+    const overlay = document.getElementById('cmd-overlay');
+    overlay.style.display = 'none';
+    document.getElementById('cmd-input').value = '';
+  }
+
+  function renderPaletteResults(query) {
+    const container = document.getElementById('cmd-results');
+    const q = query.trim().toLowerCase();
+    let items, showGroups;
+
+    if (!q) {
+      // Show pinned suggestions
+      items = CMD_PINNED.map(label => CMD_INDEX.find(i => i.label === label)).filter(Boolean);
+      showGroups = false;
+    } else {
+      items = CMD_INDEX.filter(i =>
+        i.label.toLowerCase().includes(q) || i.desc.toLowerCase().includes(q) || i.group.toLowerCase().includes(q)
+      );
+      showGroups = true;
     }
-    dropdown.style.display = 'block';
-  }
 
-  function hideSearchDropdown() {
-    document.getElementById('search-dropdown').style.display = 'none';
-  }
-
-  function handleSearchInput(query) {
-    const suggestionsEl = document.getElementById('search-suggestions');
-    const dropdown = document.getElementById('search-dropdown');
-    dropdown.style.display = 'block';
-    if (!query.trim()) { showSearchDropdown(); return; }
-
-    const q = query.toLowerCase();
-    const results = SEARCH_INDEX.filter(item =>
-      item.label.toLowerCase().includes(q) ||
-      item.desc.toLowerCase().includes(q)
-    ).slice(0, 8);
-
-    if (!results.length) {
-      suggestionsEl.innerHTML = `<div style="padding:20px;text-align:center;color:#aaa;font-size:13px;">No results for "<strong style="color:#222;">${query}</strong>"</div>`;
+    if (!items.length) {
+      container.innerHTML = `<div style="padding:32px;text-align:center;color:#aaa;font-size:14px;">No results for "<strong style="color:#333;">${query}</strong>"</div>`;
       return;
     }
 
-    suggestionsEl.innerHTML = `
-      <div style="padding:10px 16px 6px;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#aaa;">Results</div>
-      ${results.map(item => `
-        <div class="search-item" onclick="(${item.action.toString()})(); hideSearchDropdown(); document.getElementById('site-search').value='';">
-          <span style="font-size:18px;width:28px;text-align:center;">${item.icon}</span>
-          <div><div style="font-size:13px;font-weight:500;color:#222;">${item.label}</div><div style="font-size:11px;color:#888;">${item.desc}</div></div>
-        </div>`).join('')}`;
-  }
-
-  function runSearch(label) {
-    const item = SEARCH_INDEX.find(i => i.label === label);
-    if (item) { item.action(); hideSearchDropdown(); document.getElementById('site-search').value = ''; }
-  }
-
-  // Search item hover styles
-  const searchStyle = document.createElement('style');
-  searchStyle.textContent = `.search-item { display:flex; align-items:center; gap:12px; padding:10px 16px; cursor:pointer; transition:background .15s; } .search-item:hover { background:#fff5f5; }`;
-  document.head.appendChild(searchStyle);
-
-  // Enter key support
-  document.getElementById('site-search').addEventListener('keydown', e => {
-    if (e.key === 'Escape') { hideSearchDropdown(); document.getElementById('site-search').blur(); }
-    if (e.key === 'Enter') {
-      const q = e.target.value.trim().toLowerCase();
-      const match = SEARCH_INDEX.find(i => i.label.toLowerCase().includes(q) || i.desc.toLowerCase().includes(q));
-      if (match) { match.action(); hideSearchDropdown(); e.target.value = ''; }
+    if (!q) {
+      container.innerHTML = `
+        <div style="padding:10px 20px 6px;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#bbb;">Suggested</div>
+        ${items.map((item, idx) => paletteRow(item, idx)).join('')}
+        <div style="padding:10px 20px;font-size:11px;color:#ccc;text-align:center;">Start typing to search everything</div>`;
+    } else {
+      // Group by category
+      const groups = {};
+      items.forEach(item => {
+        if (!groups[item.group]) groups[item.group] = [];
+        groups[item.group].push(item);
+      });
+      let html = '';
+      let globalIdx = 0;
+      Object.entries(groups).forEach(([group, groupItems]) => {
+        html += `<div style="padding:10px 20px 4px;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#bbb;">${group}</div>`;
+        groupItems.forEach(item => { html += paletteRow(item, globalIdx++); });
+      });
+      container.innerHTML = html;
     }
+
+    // Keyboard navigation
+    setupPaletteKeys();
+  }
+
+  let paletteSelected = -1;
+
+  function paletteRow(item, idx) {
+    const isExternal = item.action.toString().includes('window.open');
+    return `<div class="cmd-row" data-idx="${idx}" onclick="runPaletteItem(${CMD_INDEX.indexOf(item)})"
+      style="display:flex;align-items:center;gap:14px;padding:11px 20px;cursor:pointer;transition:background 0.1s;border-radius:0;"
+      onmouseover="highlightRow(this)" onmouseout="unhighlightRow(this)">
+      <div style="width:36px;height:36px;border-radius:10px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">${item.icon}</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:14px;font-weight:600;color:#1a1a2e;">${item.label}</div>
+        <div style="font-size:12px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.desc}</div>
+      </div>
+      ${isExternal ? `<div style="font-size:10px;color:#ccc;">↗</div>` : `<div style="font-size:12px;color:#ccc;">→</div>`}
+    </div>`;
+  }
+
+  function highlightRow(el) { el.style.background = '#fff5f7'; }
+  function unhighlightRow(el) { el.style.background = ''; }
+
+  function runPaletteItem(idx) {
+    const item = CMD_INDEX[idx];
+    if (item) item.action();
+    closePalette();
+  }
+
+  function filterPalette(val) { renderPaletteResults(val); }
+
+  function setupPaletteKeys() {
+    const input = document.getElementById('cmd-input');
+    input.onkeydown = (e) => {
+      const rows = document.querySelectorAll('.cmd-row');
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        paletteSelected = Math.min(paletteSelected + 1, rows.length - 1);
+        rows.forEach((r, i) => r.style.background = i === paletteSelected ? '#fff5f7' : '');
+        rows[paletteSelected]?.scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        paletteSelected = Math.max(paletteSelected - 1, 0);
+        rows.forEach((r, i) => r.style.background = i === paletteSelected ? '#fff5f7' : '');
+        rows[paletteSelected]?.scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'Enter') {
+        if (paletteSelected >= 0 && rows[paletteSelected]) rows[paletteSelected].click();
+        else if (rows.length > 0) rows[0].click();
+      } else if (e.key === 'Escape') {
+        closePalette();
+      }
+    };
+  }
+
+  // ⌘K / Ctrl+K shortcut
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openPalette(); }
+    if (e.key === 'Escape') closePalette();
   });
 
   // ══════════════════════════════════════════════
@@ -3218,6 +3255,18 @@ Thank you,
   ];
   let slotSpinning = false;
   let slotCurrent = 0;
+  let slotCurrentUrl = '#resources';
+
+  function handleSlotVisit(e) {
+    e.preventDefault();
+    const url = slotCurrentUrl;
+    if (url.startsWith('#')) {
+      const el = document.getElementById(url.slice(1));
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.open(url, '_blank');
+    }
+  }
 
   function spinSlot() {
     if (slotSpinning) return;
@@ -3243,6 +3292,7 @@ Thank you,
       if (ticks >= totalTicks) {
         clearInterval(interval);
         slotCurrent = idx;
+        slotCurrentUrl = slotItems[idx].url;
         visit.href = slotItems[idx].url;
         btn.textContent = '🎰 Spin Again!';
         btn.disabled = false;
@@ -3312,6 +3362,8 @@ Thank you,
         if (!revealed && scratchedArea > 150 * 150 * 0.38) {
           revealed = true;
           ctx.clearRect(0, 0, 150, 150);
+          // Remove canvas so the links underneath are clickable
+          setTimeout(() => canvas.remove(), 300);
         }
       }
       canvas.addEventListener('mousedown', e => { scratching = true; const r = canvas.getBoundingClientRect(); scratch(e.clientX-r.left, e.clientY-r.top); });
