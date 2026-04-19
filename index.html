@@ -1240,6 +1240,210 @@
     </div>
   </div>
 
+  <!-- CARD FAN -->
+  <div id="card-fan-section" style="padding:48px 20px 32px;background:linear-gradient(180deg,#f8f8f8 0%,#ffffff 100%);overflow:hidden;">
+    <div id="fan-tagline" style="font-size:clamp(1.4rem,3vw,2rem);font-weight:800;color:var(--dark);text-align:center;opacity:0;transform:translateY(16px);transition:opacity 0.7s ease,transform 0.7s ease;margin-bottom:44px;letter-spacing:-0.01em;font-family:'DM Serif Display',serif;">
+      Pick a card — <em style="color:var(--red);font-style:italic;">where to?</em>
+    </div>
+    <div id="fan-deck" style="position:relative;width:100%;height:220px;display:flex;align-items:center;justify-content:center;">
+
+      <div class="fan-card" data-target="upcoming-events" style="background:linear-gradient(145deg,#2ecc71,#1A6B45);">
+        <div class="fan-icon">📅</div>
+        <div class="fan-label">Upcoming Events</div>
+        <div class="fan-sub">Workshops & programs</div>
+      </div>
+
+      <div class="fan-card" data-target="scholarships" style="background:linear-gradient(145deg,#f9c74f,#C8972A);">
+        <div class="fan-icon">💰</div>
+        <div class="fan-label">Grants & Aid</div>
+        <div class="fan-sub">Scholarships & appeals</div>
+      </div>
+
+      <div class="fan-card" data-target="guides" style="background:linear-gradient(145deg,#74b9ff,#1A3A8F);">
+        <div class="fan-icon">📖</div>
+        <div class="fan-label">How-To Guides</div>
+        <div class="fan-sub">Step-by-step help</div>
+      </div>
+
+      <div class="fan-card" data-target="resources" style="background:linear-gradient(145deg,#fd79a8,#CC0033);">
+        <div class="fan-icon">🏫</div>
+        <div class="fan-label">Campus Resources</div>
+        <div class="fan-sub">Health, tutoring & more</div>
+      </div>
+
+      <div class="fan-card" data-target="career-services" style="background:linear-gradient(145deg,#a29bfe,#6B3A8A);">
+        <div class="fan-icon">💼</div>
+        <div class="fan-label">Career Tools</div>
+        <div class="fan-sub">Handshake & more</div>
+      </div>
+
+      <div class="fan-card" data-target="opportunities-admin" style="background:linear-gradient(145deg,#ff7675,#C8420A);">
+        <div class="fan-icon">🚀</div>
+        <div class="fan-label">Opportunities</div>
+        <div class="fan-sub">Fellowships & programs</div>
+      </div>
+
+      <div class="fan-card" data-target="meet-the-team" style="background:linear-gradient(145deg,#00cec9,#028090);">
+        <div class="fan-icon">👥</div>
+        <div class="fan-label">Meet the Team</div>
+        <div class="fan-sub">Your SSS staff</div>
+      </div>
+
+      <div class="fan-card" data-target="spotlights" style="background:linear-gradient(145deg,#fdcb6e,#e17055);">
+        <div class="fan-icon">⭐</div>
+        <div class="fan-label">Spotlights</div>
+        <div class="fan-sub">Student stories</div>
+      </div>
+
+    </div>
+    <div id="fan-subtitle" style="margin-top:28px;font-size:0.9rem;color:#888;font-weight:600;text-align:center;opacity:0;transition:opacity 0.6s ease;">
+      Hover to preview · Click to jump there
+    </div>
+    <div style="text-align:center;margin-top:14px;">
+      <button id="fan-reset" style="background:transparent;border:2px solid #e0e0e0;color:#aaa;padding:8px 22px;border-radius:50px;font-size:0.82rem;font-weight:700;cursor:pointer;opacity:0;transition:opacity 0.4s ease,background 0.2s,color 0.2s,border-color 0.2s;font-family:'DM Sans',sans-serif;">↺ Reshuffle</button>
+    </div>
+  </div>
+
+  <style>
+    .fan-card {
+      position: absolute;
+      width: 118px;
+      height: 165px;
+      border-radius: 16px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 8px;
+      text-align: center;
+      color: white;
+      opacity: 0;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      transition: transform 0.65s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease, box-shadow 0.3s ease;
+      user-select: none;
+      left: 50%;
+      margin-left: -59px;
+      top: 50%;
+      margin-top: -82px;
+    }
+    .fan-icon { font-size: 30px; line-height: 1; }
+    .fan-label { font-size: 11px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.3; }
+    .fan-sub { font-size: 9.5px; font-weight: 600; opacity: 0.82; line-height: 1.3; }
+    #fan-reset:hover { background: var(--red); color: white; border-color: var(--red); }
+    @media (max-width: 600px) {
+      .fan-card { width: 95px; height: 135px; margin-left: -47px; margin-top: -67px; }
+      .fan-icon { font-size: 22px; }
+      .fan-label { font-size: 9px; }
+      .fan-sub { font-size: 8px; }
+    }
+  </style>
+
+  <script>
+  (function() {
+    const cards = document.querySelectorAll('.fan-card');
+    const tagline = document.getElementById('fan-tagline');
+    const subtitle = document.getElementById('fan-subtitle');
+    const resetBtn = document.getElementById('fan-reset');
+    const n = cards.length;
+    let fanned = false;
+
+    const isMobile = window.innerWidth < 600;
+    const fanAngles = [-42, -30, -18, -7, 7, 18, 30, 42];
+    const fanX = isMobile
+      ? [-140, -100, -62, -22, 22, 62, 100, 140]
+      : [-185, -130, -80, -30, 30, 80, 130, 185];
+
+    function stackCards() {
+      cards.forEach((c, i) => {
+        c.style.transition = 'none';
+        c.style.transform = `translateY(${(i - n + 1) * 1}px) rotate(${(i - n/2) * 0.4}deg)`;
+        c.style.opacity = i >= n - 3 ? String(0.5 + (i - (n-3)) * 0.25) : '0';
+        c.style.zIndex = i;
+      });
+    }
+
+    function fanOut() {
+      fanned = true;
+      cards.forEach((c, i) => {
+        const delay = i * 55;
+        c.style.transition = `transform 0.65s cubic-bezier(0.34,1.56,0.64,1) ${delay}ms, opacity 0.4s ease ${delay}ms, box-shadow 0.3s ease`;
+        c.style.opacity = '1';
+        c.style.zIndex = i;
+        c.style.transform = `translateX(${fanX[i]}px) rotate(${fanAngles[i]}deg) translateY(-8px)`;
+      });
+      setTimeout(() => {
+        subtitle.style.opacity = '1';
+        resetBtn.style.opacity = '1';
+      }, 600);
+    }
+
+    function resetFan() {
+      fanned = false;
+      subtitle.style.opacity = '0';
+      resetBtn.style.opacity = '0';
+      stackCards();
+      setTimeout(() => {
+        cards.forEach((c, i) => {
+          c.style.transition = `transform 0.5s cubic-bezier(0.34,1.56,0.64,1) ${i*0.04}s, opacity 0.3s ease ${i*0.04}s`;
+          c.style.transform = `translateY(${(i-(n-1))*2}px) rotate(${(i-(n-1))*1.2}deg)`;
+          c.style.opacity = i >= n-3 ? '1' : '0';
+        });
+        setTimeout(fanOut, 800);
+      }, 80);
+    }
+
+    cards.forEach((c, i) => {
+      c.addEventListener('mouseenter', () => {
+        if (!fanned) return;
+        c.style.transform = `translateX(${fanX[i]}px) rotate(${fanAngles[i]}deg) translateY(-32px) scale(1.05)`;
+        c.style.boxShadow = '0 20px 44px rgba(0,0,0,0.22)';
+        c.style.zIndex = 20;
+      });
+      c.addEventListener('mouseleave', () => {
+        if (!fanned) return;
+        c.style.transform = `translateX(${fanX[i]}px) rotate(${fanAngles[i]}deg) translateY(-8px)`;
+        c.style.boxShadow = '0 4px 16px rgba(0,0,0,0.15)';
+        c.style.zIndex = i;
+      });
+      c.addEventListener('click', () => {
+        if (!fanned) return;
+        const target = document.getElementById(c.dataset.target);
+        if (target) {
+          c.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+          c.style.transform = `translateX(${fanX[i]}px) rotate(${fanAngles[i]}deg) translateY(-55px) scale(1.12)`;
+          setTimeout(() => {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 220);
+        }
+      });
+    });
+
+    resetBtn.addEventListener('click', resetFan);
+
+    // Trigger on scroll into view
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        tagline.style.opacity = '1';
+        tagline.style.transform = 'translateY(0)';
+        stackCards();
+        setTimeout(() => {
+          cards.forEach((c, i) => {
+            c.style.transition = `transform 0.5s cubic-bezier(0.34,1.56,0.64,1) ${i*0.04}s, opacity 0.3s ease ${i*0.04}s`;
+            c.style.transform = `translateY(${(i-(n-1))*2}px) rotate(${(i-(n-1))*1.2}deg)`;
+            c.style.opacity = i >= n-3 ? '1' : '0';
+          });
+          setTimeout(fanOut, 900);
+        }, 300);
+        observer.disconnect();
+      }
+    }, { threshold: 0.3 });
+
+    observer.observe(document.getElementById('card-fan-section'));
+  })();
+  </script>
+
   <!-- MEET THE TEAM -->
   <section id="meet-the-team">
     <div class="section-header">
@@ -1353,6 +1557,23 @@
       </div>
     </div>
     <hr class="section-divider">
+
+    <!-- SLOT MACHINE -->
+    <div id="slot-machine" style="background:linear-gradient(135deg,#1a1a2e,#2a2a4e);border-radius:20px;padding:28px 24px;margin:24px 0 32px;text-align:center;">
+      <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:8px;">🎰 Campus Resource Roulette</p>
+      <p style="font-size:14px;color:rgba(255,255,255,0.7);margin-bottom:20px;">Not sure where to start? Spin and discover a resource!</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px;">
+        <div style="background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.15);border-radius:14px;padding:16px 20px;min-width:200px;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;overflow:hidden;position:relative;">
+          <div id="slot-icon" style="font-size:30px;transition:transform 0.1s;line-height:1;">🏥</div>
+          <div id="slot-name" style="font-size:13px;font-weight:700;color:white;text-align:center;line-height:1.3;">Student Health Services</div>
+          <div id="slot-desc" style="font-size:11px;color:rgba(255,255,255,0.55);text-align:center;">Free medical care on campus</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button id="slot-spin" onclick="spinSlot()" style="background:var(--red);color:white;border:none;padding:11px 28px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:transform 0.1s,background 0.2s;">🎰 Spin!</button>
+        <a id="slot-visit" href="#resources" style="background:rgba(255,255,255,0.1);color:white;border:none;padding:11px 28px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block;transition:background 0.2s;">Visit →</a>
+      </div>
+    </div>
 
     <div style="display:grid;gap:28px;margin-top:24px;">
 
@@ -1608,6 +1829,14 @@
     </div>
     <hr class="section-divider">
 
+    <!-- SCRATCH CARD -->
+    <div style="margin:24px 0 32px;text-align:center;">
+      <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);margin-bottom:6px;">✨ Scratch & Discover</p>
+      <p style="font-size:13px;color:var(--text-light);margin-bottom:18px;">Scratch to reveal a hidden opportunity just for you!</p>
+      <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;" id="scratch-grid"></div>
+      <button onclick="resetScratch()" style="margin-top:18px;background:transparent;border:2px solid var(--border);color:var(--text-light);padding:8px 22px;border-radius:50px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:border-color 0.2s,color 0.2s;">↺ New Cards</button>
+    </div>
+
     <div class="opp-grid" style="margin-top:24px;">
 
       <div class="opp-card">
@@ -1807,6 +2036,22 @@
       </div>
     </div>
     <hr class="section-divider" style="margin-bottom:40px;">
+
+    <!-- SPIN THE WHEEL -->
+    <div style="background:linear-gradient(135deg,#f8f0ff,#fff0f3);border-radius:20px;padding:28px 24px;margin-bottom:40px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:28px;">
+      <div style="text-align:center;flex:1;min-width:200px;">
+        <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#6B3A8A;margin-bottom:6px;">🎡 Career Tool Spinner</p>
+        <p style="font-size:13px;color:var(--text-light);margin-bottom:18px;">Not sure which tool to use? Spin to find out!</p>
+        <canvas id="career-wheel" width="220" height="220" style="border-radius:50%;cursor:pointer;display:block;margin:0 auto;box-shadow:0 8px 32px rgba(107,58,138,0.2);"></canvas>
+        <button onclick="spinWheel()" id="wheel-btn" style="margin-top:16px;background:#6B3A8A;color:white;border:none;padding:11px 28px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:background 0.2s;">🎡 Spin!</button>
+      </div>
+      <div style="flex:1;min-width:220px;max-width:300px;">
+        <div id="wheel-result" style="background:white;border-radius:14px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.08);min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px;">
+          <div style="font-size:28px;">🎯</div>
+          <div style="font-size:13px;font-weight:700;color:#1a1a2e;">Spin the wheel to get a career tool recommendation!</div>
+        </div>
+      </div>
+    </div>
 
     <!-- Step 1 -->
     <div style="margin-bottom:32px;">
@@ -2683,36 +2928,55 @@ Thank you,
     }
     grid.innerHTML = '';
     grid.style.display = 'grid';
-    grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(280px, 1fr))';
-    grid.style.gap = '20px';
+    grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(240px, 1fr))';
+    grid.style.gap = '24px';
+
+    // Add flip card styles once
+    if (!document.getElementById('flip-card-styles')) {
+      const st = document.createElement('style');
+      st.id = 'flip-card-styles';
+      st.textContent = `
+        .flip-card { perspective: 1000px; height: 220px; cursor: pointer; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.65s cubic-bezier(0.34,1.2,0.64,1); transform-style: preserve-3d; }
+        .flip-card:hover .flip-card-inner, .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.10); }
+        .flip-card-back { transform: rotateY(180deg); display: flex; flex-direction: column; justify-content: center; padding: 20px; }
+        .flip-hint { position: absolute; bottom: 8px; right: 12px; font-size: 10px; opacity: 0.5; font-weight: 600; letter-spacing: 0.05em; }
+      `;
+      document.head.appendChild(st);
+    }
 
     const colors = [
-      { bg: 'CC0033', light: 'FFF0F3' },
-      { bg: '1A3A8F', light: 'F0F4FF' },
-      { bg: '1A6B45', light: 'F0FFF4' },
-      { bg: 'C8972A', light: 'FFF8E6' },
-      { bg: '6B3A8A', light: 'F8F0FF' },
-      { bg: 'C8420A', light: 'FFF4F0' },
+      { bg: 'CC0033' }, { bg: '1A3A8F' }, { bg: '1A6B45' },
+      { bg: 'C8972A' }, { bg: '6B3A8A' }, { bg: 'C8420A' },
     ];
 
     team.forEach((m, i) => {
       const col = colors[i % colors.length];
       const initials = (m.name || '?').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-      const card = document.createElement('div');
-      card.style.cssText = `background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);display:flex;flex-direction:column;`;
-      card.innerHTML = `
-        <div style="background:#${col.bg};padding:20px 20px 16px;display:flex;align-items:center;gap:14px;">
-          <div style="width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:white;flex-shrink:0;">${m.emoji || initials}</div>
-          <div>
-            <div style="font-size:16px;font-weight:700;color:white;line-height:1.2;">${m.name || ''}</div>
-            <div style="font-size:12px;color:rgba(255,255,255,0.85);margin-top:2px;font-weight:500;">${m.role || ''}</div>
+      const wrapper = document.createElement('div');
+      wrapper.className = 'flip-card';
+      wrapper.innerHTML = `
+        <div class="flip-card-inner">
+          <div class="flip-card-front" style="background:#${col.bg};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;">
+            <div style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:white;">${m.emoji || initials}</div>
+            <div style="text-align:center;">
+              <div style="font-size:17px;font-weight:800;color:white;line-height:1.2;">${m.name || ''}</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:4px;font-weight:600;">${m.role || ''}</div>
+            </div>
+            ${m.email ? `<div style="font-size:11px;color:rgba(255,255,255,0.7);">✉️ ${m.email}</div>` : ''}
+            <div class="flip-hint" style="color:rgba(255,255,255,0.5);">hover to flip ↩</div>
           </div>
-        </div>
-        <div style="padding:16px 20px;flex:1;display:flex;flex-direction:column;gap:8px;">
-          ${m.email ? `<a href="mailto:${m.email}" style="font-size:12px;color:#${col.bg};text-decoration:none;font-weight:600;display:flex;align-items:center;gap:6px;">✉️ ${m.email}</a>` : ''}
-          ${m.bio ? `<p style="font-size:13px;color:#555;line-height:1.6;margin:0;">${m.bio}</p>` : ''}
+          <div class="flip-card-back" style="background:white;">
+            <div style="font-size:13px;font-weight:800;color:#${col.bg};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">${m.role || ''}</div>
+            <div style="font-size:14px;font-weight:700;color:#1a1a2e;margin-bottom:10px;">${m.name || ''}</div>
+            <p style="font-size:13px;color:#555;line-height:1.65;margin:0;">${m.bio || 'SSS staff member dedicated to helping students succeed.'}</p>
+            ${m.email ? `<a href="mailto:${m.email}" style="display:inline-block;margin-top:12px;font-size:12px;color:#${col.bg};font-weight:700;text-decoration:none;">✉️ ${m.email}</a>` : ''}
+          </div>
         </div>`;
-      grid.appendChild(card);
+      // Touch support
+      wrapper.addEventListener('click', () => wrapper.classList.toggle('flipped'));
+      grid.appendChild(wrapper);
     });
   }
 
@@ -2926,6 +3190,239 @@ Thank you,
       if (match) { match.action(); hideSearchDropdown(); e.target.value = ''; }
     }
   });
+
+  // ══════════════════════════════════════════════
+  // SLOT MACHINE — Campus Resources
+  // ══════════════════════════════════════════════
+  const slotItems = [
+    { icon:'🏥', name:'Student Health Services', desc:'Free medical care — DaSilva Hall', url:'#resources' },
+    { icon:'🧠', name:'Free Counseling (CCC)', desc:'Confidential mental health support', url:'#resources' },
+    { icon:'✏️', name:'Tutoring / Writing Center', desc:'Free academic help for all students', url:'#resources' },
+    { icon:'♿', name:'Disability Services (ODS)', desc:'Accommodations — Marillac Hall 134', url:'#resources' },
+    { icon:'🏋️', name:'Campus Recreation (CREC)', desc:'Fitness center & intramurals', url:'#resources' },
+    { icon:'💜', name:'SOAR', desc:'Sexual violence support & resources', url:'#resources' },
+    { icon:'🌈', name:'Inclusivity Resource Center', desc:'Safe & inclusive space for all', url:'#resources' },
+    { icon:'🎓', name:'Financial Aid Office', desc:'Tobin Building — Queens Campus', url:'#resources' },
+    { icon:'📖', name:'Study Rooms', desc:"St. John's Hall, Room 103B", url:'#resources' },
+    { icon:'🍎', name:'Basic Needs / Food Resources', desc:'Free food & emergency support', url:'#resources' },
+    { icon:'🚌', name:'Shuttle Van', desc:'Free Public Safety shuttle on campus', url:'#resources' },
+  ];
+  let slotSpinning = false;
+  let slotCurrent = 0;
+
+  function spinSlot() {
+    if (slotSpinning) return;
+    slotSpinning = true;
+    const btn = document.getElementById('slot-spin');
+    btn.textContent = '🎰 Spinning...';
+    btn.disabled = true;
+    const icon = document.getElementById('slot-icon');
+    const name = document.getElementById('slot-name');
+    const desc = document.getElementById('slot-desc');
+    const visit = document.getElementById('slot-visit');
+    let ticks = 0;
+    const totalTicks = 18 + Math.floor(Math.random() * 10);
+    let idx = slotCurrent;
+    const interval = setInterval(() => {
+      idx = (idx + 1) % slotItems.length;
+      icon.style.transform = 'translateY(-8px) scale(0.8)';
+      icon.textContent = slotItems[idx].icon;
+      name.textContent = slotItems[idx].name;
+      desc.textContent = slotItems[idx].desc;
+      setTimeout(() => { icon.style.transform = 'translateY(0) scale(1)'; }, 80);
+      ticks++;
+      if (ticks >= totalTicks) {
+        clearInterval(interval);
+        slotCurrent = idx;
+        visit.href = slotItems[idx].url;
+        btn.textContent = '🎰 Spin Again!';
+        btn.disabled = false;
+        slotSpinning = false;
+        icon.style.transform = 'scale(1.4)';
+        setTimeout(() => { icon.style.transform = 'scale(1)'; }, 200);
+      }
+    }, 80 + ticks * 3);
+  }
+
+  // ══════════════════════════════════════════════
+  // SCRATCH CARDS — Off-Campus Resources
+  // ══════════════════════════════════════════════
+  const scratchItems = [
+    { icon:'🤝', name:'Handshake', desc:'SJU jobs & internships platform', url:'https://stjohns.joinhandshake.com/login', color:'#1A3A8F' },
+    { icon:'💼', name:'Parker Dewey', desc:'Paid micro-internship opportunities', url:'https://info.parkerdewey.com/student/stjohns', color:'#CC0033' },
+    { icon:'🌱', name:'Forage', desc:'Virtual work experience programs', url:'https://www.theforage.com/landing/st-johns-university-7t43j/st-johns-university-k40f', color:'#1A6B45' },
+    { icon:'🌍', name:'Interstride', desc:'Job search for international students', url:'https://student.interstride.com/login', color:'#C8420A' },
+    { icon:'🎤', name:'Big Interview', desc:'Practice interviews with video feedback', url:'https://careerservices.stjohns.edu/resources/big-interview/', color:'#6B3A8A' },
+    { icon:'📊', name:'Occupational Handbook', desc:'Salary & job outlook data', url:'https://www.bls.gov/ooh/', color:'#C8972A' },
+    { icon:'🧭', name:'Focus2', desc:'Career assessment tool', url:'https://careerservices.stjohns.edu/account/login/?redirect_to=%2Fresources%2Ffocus2%2F&restricted=true', color:'#028090' },
+    { icon:'🎬', name:'Candid Career', desc:'Career videos from professionals', url:'https://careerservices.stjohns.edu/videos/?ctag%5B%5D=candid-career-videos', color:'#C8420A' },
+  ];
+
+  function buildScratchCards() {
+    const grid = document.getElementById('scratch-grid');
+    if (!grid) return;
+    const items = [...scratchItems].sort(() => Math.random() - 0.5).slice(0, 4);
+    grid.innerHTML = '';
+    items.forEach(item => {
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'position:relative;width:150px;height:150px;border-radius:16px;overflow:hidden;cursor:pointer;flex-shrink:0;';
+      wrap.innerHTML = `
+        <div class="scratch-reveal" style="position:absolute;inset:0;background:${item.color};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px;text-align:center;">
+          <div style="font-size:32px;">${item.icon}</div>
+          <div style="font-size:12px;font-weight:800;color:white;line-height:1.3;">${item.name}</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.8);line-height:1.3;">${item.desc}</div>
+          <a href="${item.url}" target="_blank" style="margin-top:4px;font-size:10px;font-weight:700;color:white;background:rgba(255,255,255,0.2);padding:3px 10px;border-radius:20px;text-decoration:none;">Visit →</a>
+        </div>
+        <canvas class="scratch-canvas" width="150" height="150" style="position:absolute;inset:0;border-radius:16px;touch-action:none;"></canvas>`;
+      grid.appendChild(wrap);
+      const canvas = wrap.querySelector('.scratch-canvas');
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#b0b0b0';
+      ctx.fillRect(0, 0, 150, 150);
+      for (let i = 0; i < 12; i++) {
+        ctx.fillStyle = `rgba(${160+Math.random()*30},${160+Math.random()*30},${160+Math.random()*30},0.6)`;
+        ctx.fillRect(Math.random()*150, Math.random()*150, Math.random()*50+10, Math.random()*8+2);
+      }
+      ctx.font = 'bold 13px sans-serif';
+      ctx.fillStyle = '#777';
+      ctx.textAlign = 'center';
+      ctx.fillText('✦ SCRATCH ME ✦', 75, 65);
+      ctx.fillText('to reveal', 75, 85);
+      ctx.fillStyle = '#999';
+      ctx.font = '22px sans-serif';
+      ctx.fillText('🪙', 75, 115);
+      let scratching = false;
+      let scratchedArea = 0;
+      let revealed = false;
+      function scratch(x, y) {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(x, y, 24, 0, Math.PI * 2);
+        ctx.fill();
+        scratchedArea += Math.PI * 24 * 24;
+        if (!revealed && scratchedArea > 150 * 150 * 0.38) {
+          revealed = true;
+          ctx.clearRect(0, 0, 150, 150);
+        }
+      }
+      canvas.addEventListener('mousedown', e => { scratching = true; const r = canvas.getBoundingClientRect(); scratch(e.clientX-r.left, e.clientY-r.top); });
+      canvas.addEventListener('mousemove', e => { if (!scratching) return; const r = canvas.getBoundingClientRect(); scratch(e.clientX-r.left, e.clientY-r.top); });
+      canvas.addEventListener('mouseup', () => scratching = false);
+      canvas.addEventListener('touchstart', e => { e.preventDefault(); scratching = true; const r = canvas.getBoundingClientRect(); const t = e.touches[0]; scratch(t.clientX-r.left, t.clientY-r.top); }, {passive:false});
+      canvas.addEventListener('touchmove', e => { e.preventDefault(); if (!scratching) return; const r = canvas.getBoundingClientRect(); const t = e.touches[0]; scratch(t.clientX-r.left, t.clientY-r.top); }, {passive:false});
+      canvas.addEventListener('touchend', () => scratching = false);
+    });
+  }
+
+  function resetScratch() { buildScratchCards(); }
+
+  // ══════════════════════════════════════════════
+  // SPIN THE WHEEL — Career Tools
+  // ══════════════════════════════════════════════
+  const wheelItems = [
+    { label:'Handshake', icon:'🤝', desc:'Jobs & internships for SJU students', url:'https://stjohns.joinhandshake.com/login', color:'#CC0033' },
+    { label:'Big Interview', icon:'🎤', desc:'Practice interviews with AI feedback', url:'https://careerservices.stjohns.edu/resources/big-interview/', color:'#1A3A8F' },
+    { label:'Forage', icon:'🌱', desc:'Virtual work experience programs', url:'https://www.theforage.com/landing/st-johns-university-7t43j/st-johns-university-k40f', color:'#1A6B45' },
+    { label:'Parker Dewey', icon:'💼', desc:'Paid micro-internships', url:'https://info.parkerdewey.com/student/stjohns', color:'#C8972A' },
+    { label:'Focus2', icon:'🧭', desc:'Career assessment tool', url:'https://careerservices.stjohns.edu/account/login/?redirect_to=%2Fresources%2Ffocus2%2F&restricted=true', color:'#6B3A8A' },
+    { label:'LinkedIn', icon:'🔗', desc:'Build your professional network', url:'https://www.linkedin.com/company/stjohnscareerservices/', color:'#0A66C2' },
+    { label:"O*Net", icon:'🔍', desc:'Explore job requirements & careers', url:'https://www.onetonline.org/', color:'#C8420A' },
+    { label:'Candid Career', icon:'🎬', desc:'Career videos from professionals', url:'https://careerservices.stjohns.edu/videos/?ctag%5B%5D=candid-career-videos', color:'#028090' },
+  ];
+
+  let wheelSpinning = false;
+  let wheelAngle = 0;
+
+  function drawWheel() {
+    const canvas = document.getElementById('career-wheel');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const cx = 110, cy = 110, r = 104;
+    const slice = (Math.PI * 2) / wheelItems.length;
+    ctx.clearRect(0, 0, 220, 220);
+    wheelItems.forEach((item, i) => {
+      const start = wheelAngle + i * slice;
+      const end = start + slice;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, r, start, end);
+      ctx.closePath();
+      ctx.fillStyle = item.color;
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(start + slice / 2);
+      ctx.textAlign = 'right';
+      ctx.fillStyle = 'white';
+      ctx.font = 'bold 11px DM Sans, sans-serif';
+      ctx.shadowColor = 'rgba(0,0,0,0.3)';
+      ctx.shadowBlur = 3;
+      ctx.fillText(item.icon + ' ' + item.label, r - 8, 4);
+      ctx.restore();
+    });
+    ctx.beginPath();
+    ctx.arc(cx, cy, 20, 0, Math.PI * 2);
+    ctx.fillStyle = 'white';
+    ctx.shadowColor = 'rgba(0,0,0,0.2)';
+    ctx.shadowBlur = 6;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.font = '14px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('🎡', cx, cy + 5);
+    // Pointer triangle
+    ctx.beginPath();
+    ctx.moveTo(cx + r + 14, cy);
+    ctx.lineTo(cx + r, cy - 10);
+    ctx.lineTo(cx + r, cy + 10);
+    ctx.closePath();
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fill();
+  }
+
+  function spinWheel() {
+    if (wheelSpinning) return;
+    wheelSpinning = true;
+    const btn = document.getElementById('wheel-btn');
+    btn.textContent = '🎡 Spinning...';
+    btn.disabled = true;
+    const sliceAngle = (Math.PI * 2) / wheelItems.length;
+    const targetSlice = Math.floor(Math.random() * wheelItems.length);
+    const extraSpins = (5 + Math.floor(Math.random() * 4)) * Math.PI * 2;
+    const targetAngle = -((targetSlice + 0.5) * sliceAngle);
+    const totalRotation = extraSpins + targetAngle - (wheelAngle % (Math.PI * 2));
+    const duration = 3800;
+    const start = performance.now();
+    const startAngle = wheelAngle;
+    function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
+    function animate(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      wheelAngle = startAngle + totalRotation * easeOut(progress);
+      drawWheel();
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        wheelSpinning = false;
+        btn.textContent = '🎡 Spin Again!';
+        btn.disabled = false;
+        const item = wheelItems[targetSlice];
+        document.getElementById('wheel-result').innerHTML = `
+          <div style="font-size:32px;">${item.icon}</div>
+          <div style="font-size:15px;font-weight:800;color:#1a1a2e;margin-top:4px;">${item.label}</div>
+          <div style="font-size:12px;color:#666;line-height:1.5;margin-top:4px;">${item.desc}</div>
+          <a href="${item.url}" target="_blank" style="margin-top:10px;display:inline-block;background:#6B3A8A;color:white;padding:8px 20px;border-radius:50px;font-size:12px;font-weight:700;text-decoration:none;">Open ${item.label} →</a>`;
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+
+  // Init on load
+  setTimeout(() => { drawWheel(); buildScratchCards(); }, 300);
+
   let _guideCache = [], _nlCache = [];
 
   async function openGuide(id) {
