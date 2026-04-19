@@ -1834,8 +1834,8 @@
 
     <!-- SCRATCH CARD -->
     <div style="margin:24px 0 32px;text-align:center;">
-      <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);margin-bottom:6px;">✨ Scratch & Discover</p>
-      <p style="font-size:13px;color:var(--text-light);margin-bottom:18px;">Scratch to reveal a hidden opportunity just for you!</p>
+      <p style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);margin-bottom:6px;">🪙 Scratch & Discover</p>
+      <p style="font-size:13px;color:var(--text-light);margin-bottom:18px;">Scratch to reveal a hidden off-campus opportunity — you might find your next big break!</p>
       <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;" id="scratch-grid"></div>
       <button onclick="resetScratch()" style="margin-top:18px;background:transparent;border:2px solid var(--border);color:var(--text-light);padding:8px 22px;border-radius:50px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:border-color 0.2s,color 0.2s;">↺ New Cards</button>
     </div>
@@ -3241,17 +3241,17 @@ Thank you,
   // SLOT MACHINE — Campus Resources
   // ══════════════════════════════════════════════
   const slotItems = [
-    { icon:'🏥', name:'Student Health Services', desc:'Free medical care — DaSilva Hall', url:'#resources' },
-    { icon:'🧠', name:'Free Counseling (CCC)', desc:'Confidential mental health support', url:'#resources' },
-    { icon:'✏️', name:'Tutoring / Writing Center', desc:'Free academic help for all students', url:'#resources' },
-    { icon:'♿', name:'Disability Services (ODS)', desc:'Accommodations — Marillac Hall 134', url:'#resources' },
-    { icon:'🏋️', name:'Campus Recreation (CREC)', desc:'Fitness center & intramurals', url:'#resources' },
-    { icon:'💜', name:'SOAR', desc:'Sexual violence support & resources', url:'#resources' },
-    { icon:'🌈', name:'Inclusivity Resource Center', desc:'Safe & inclusive space for all', url:'#resources' },
-    { icon:'🎓', name:'Financial Aid Office', desc:'Tobin Building — Queens Campus', url:'#resources' },
+    { icon:'🏥', name:'Student Health Services', desc:'Free medical care — DaSilva Hall', url:'https://www.stjohns.edu/life-st-johns/health-and-wellness/student-health-services' },
+    { icon:'🧠', name:'Free Counseling (CCC)', desc:'Confidential mental health support', url:'https://www.stjohns.edu/life-st-johns/health-and-wellness/center-counseling-and-consultation' },
+    { icon:'✏️', name:'Tutoring / Writing Center', desc:'Free academic help for all students', url:'https://ulc.mywconline.com/' },
+    { icon:'♿', name:'Disability Services (ODS)', desc:'Accommodations — Marillac Hall 134', url:'https://www.stjohns.edu/life-st-johns/health-and-wellness/office-disability-services' },
+    { icon:'🏋️', name:'Campus Recreation (CREC)', desc:'Fitness center & intramurals', url:'https://www.stjohns.edu/life-st-johns/campus-recreation' },
+    { icon:'💜', name:'SOAR', desc:'Sexual violence support & resources', url:'https://www.stjohns.edu/life-st-johns/health-and-wellness/sexual-assault-you-are-not-alone' },
+    { icon:'🌈', name:'Inclusivity Resource Center', desc:'Safe & inclusive space for all', url:'https://www.stjohns.edu/academics/centers-institutes/inclusivity-resource-center' },
+    { icon:'🎓', name:'Financial Aid Office', desc:'Tobin Building — Queens Campus', url:'https://www.stjohns.edu/admission/tuition-and-financial-aid' },
     { icon:'📖', name:'Study Rooms', desc:"St. John's Hall, Room 103B", url:'#resources' },
-    { icon:'🍎', name:'Basic Needs / Food Resources', desc:'Free food & emergency support', url:'#resources' },
-    { icon:'🚌', name:'Shuttle Van', desc:'Free Public Safety shuttle on campus', url:'#resources' },
+    { icon:'🍎', name:'Basic Needs / Food Resources', desc:'Free food & emergency support', url:'https://www.stjohns.edu/who-we-are/faith-mission-ministry/help-basic-needs' },
+    { icon:'🚌', name:'Shuttle Van', desc:'Free Public Safety shuttle on campus', url:'https://www.stjohns.edu/life-st-johns/new-york-locations/transportation-options' },
   ];
   let slotSpinning = false;
   let slotCurrent = 0;
@@ -3307,14 +3307,16 @@ Thank you,
   // SCRATCH CARDS — Off-Campus Resources
   // ══════════════════════════════════════════════
   const scratchItems = [
-    { icon:'🤝', name:'Handshake', desc:'SJU jobs & internships platform', url:'https://stjohns.joinhandshake.com/login', color:'#1A3A8F' },
-    { icon:'💼', name:'Parker Dewey', desc:'Paid micro-internship opportunities', url:'https://info.parkerdewey.com/student/stjohns', color:'#CC0033' },
-    { icon:'🌱', name:'Forage', desc:'Virtual work experience programs', url:'https://www.theforage.com/landing/st-johns-university-7t43j/st-johns-university-k40f', color:'#1A6B45' },
-    { icon:'🌍', name:'Interstride', desc:'Job search for international students', url:'https://student.interstride.com/login', color:'#C8420A' },
-    { icon:'🎤', name:'Big Interview', desc:'Practice interviews with video feedback', url:'https://careerservices.stjohns.edu/resources/big-interview/', color:'#6B3A8A' },
-    { icon:'📊', name:'Occupational Handbook', desc:'Salary & job outlook data', url:'https://www.bls.gov/ooh/', color:'#C8972A' },
-    { icon:'🧭', name:'Focus2', desc:'Career assessment tool', url:'https://careerservices.stjohns.edu/account/login/?redirect_to=%2Fresources%2Ffocus2%2F&restricted=true', color:'#028090' },
-    { icon:'🎬', name:'Candid Career', desc:'Career videos from professionals', url:'https://careerservices.stjohns.edu/videos/?ctag%5B%5D=candid-career-videos', color:'#C8420A' },
+    { icon:'🤝', name:'America Needs You', desc:'Career development for first-gen students', url:'https://americaneedsyou.org/', color:'#1A6B45' },
+    { icon:'🎓', name:'Basta Fellowship', desc:'Leadership & career accelerator program', url:'https://www.projectbasta.com/fellowship', color:'#CC0033' },
+    { icon:'🌆', name:'Ladders for Leaders', desc:'NYC paid internships for college students', url:'https://www.commonpoint.org/program/ladders-for-leaders', color:'#1A3A8F' },
+    { icon:'☀️', name:'SYEP', desc:'NYC Summer Youth Employment Program', url:'https://application.nycsyep.com/', color:'#C8972A' },
+    { icon:'🔬', name:'LifeSci NYC', desc:'Life sciences internship opportunities', url:'https://lifesci.nyc/', color:'#2C6E8A' },
+    { icon:'💻', name:'Externs Weekly', desc:'Remote extern programs with top companies', url:'https://join.paragonone.com/82a5b936/', color:'#5A3A8A' },
+    { icon:'📈', name:'Girls Who Invest', desc:'Finance & investing program for women', url:'https://www.girlswhoinvest.org/', color:'#8A1A5A' },
+    { icon:'🚀', name:'Aspire Leaders', desc:'Global leadership development program', url:'https://www.aspireleaders.org/', color:'#C8420A' },
+    { icon:'🧩', name:'StreetWise Partners', desc:'Mentorship for career advancement', url:'https://www.streetwisepartners.org/', color:'#1A5A3A' },
+    { icon:'💡', name:'Headstart Fellowship', desc:'Entrepreneurship & startup training', url:'https://www.headstartfellowship.com/fellowship', color:'#6B3A8A' },
   ];
 
   function buildScratchCards() {
