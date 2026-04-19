@@ -2842,22 +2842,54 @@ Thank you,
     const grid = document.querySelector('.spotlight-grid');
     if (!grid) return;
     grid.innerHTML = '';
+    grid.style.display = 'grid';
+    grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(200px, 1fr))';
+    grid.style.gap = '20px';
+
+    // Add flip styles once
+    if (!document.getElementById('spotlight-flip-styles')) {
+      const st = document.createElement('style');
+      st.id = 'spotlight-flip-styles';
+      st.textContent = `
+        .sl-flip { perspective: 900px; height: 240px; cursor: pointer; }
+        .sl-flip-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.34,1.1,0.64,1); transform-style: preserve-3d; }
+        .sl-flip:hover .sl-flip-inner, .sl-flip.flipped .sl-flip-inner { transform: rotateY(180deg); }
+        .sl-front, .sl-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.10); }
+        .sl-back { transform: rotateY(180deg); padding: 20px; display: flex; flex-direction: column; justify-content: center; background: white; }
+      `;
+      document.head.appendChild(st);
+    }
+
+    const bgColors = {
+      r1: '#CC0033', r2: '#C8420A', b1: '#1A3A8F',
+      g1: '#1A6B45', p1: '#6B3A8A', y1: '#C8972A'
+    };
+
     items.forEach(s => {
-      const initials = (s.name||'?').charAt(0).toUpperCase();
-      const color = s.color || 'r1';
-      const tags = (s.tags||'').split(',').filter(Boolean).map(t =>
-        `<span class="stag">${t.trim()}</span>`).join('');
-      const card = document.createElement('div');
-      card.className = 'spotlight-card';
-      card.innerHTML = `
-        <div class="spotlight-banner ${color}"><div class="spotlight-avatar">${initials}</div></div>
-        <div class="spotlight-body">
-          <h3>${s.name||''}</h3>
-          <p class="spotlight-role">${s.role||''}</p>
-          <p class="spotlight-quote">${s.quote||''}</p>
-          <div class="spotlight-tags">${tags}</div>
+      const initial = (s.name || '?').charAt(0).toUpperCase();
+      const bg = bgColors[s.color] || bgColors['r1'];
+      const tags = (s.tags || '').split(',').filter(Boolean);
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'sl-flip';
+      wrapper.innerHTML = `
+        <div class="sl-flip-inner">
+          <div class="sl-front" style="background:${bg};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px;text-align:center;">
+            <div style="width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,0.22);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:white;">${initial}</div>
+            <div style="font-size:16px;font-weight:800;color:white;line-height:1.2;">${s.name || ''}</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.8);font-weight:600;">${s.role || ''}</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.5);position:absolute;bottom:10px;right:12px;font-weight:600;">hover to read ↩</div>
+          </div>
+          <div class="sl-back">
+            <div style="font-size:11px;font-weight:700;color:${bg};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">${s.role || ''}</div>
+            <p style="font-size:13px;color:#444;line-height:1.6;font-style:italic;margin:0 0 12px;">"${s.quote || ''}"</p>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;">
+              ${tags.map(t => `<span style="font-size:10px;background:${bg}22;color:${bg};padding:2px 8px;border-radius:20px;font-weight:700;">${t.trim()}</span>`).join('')}
+            </div>
+          </div>
         </div>`;
-      grid.appendChild(card);
+      wrapper.addEventListener('click', () => wrapper.classList.toggle('flipped'));
+      grid.appendChild(wrapper);
     });
     observeNewCards();
   }
@@ -2928,23 +2960,8 @@ Thank you,
     }
     grid.innerHTML = '';
     grid.style.display = 'grid';
-    grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(240px, 1fr))';
-    grid.style.gap = '24px';
-
-    // Add flip card styles once
-    if (!document.getElementById('flip-card-styles')) {
-      const st = document.createElement('style');
-      st.id = 'flip-card-styles';
-      st.textContent = `
-        .flip-card { perspective: 1000px; height: 220px; cursor: pointer; }
-        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.65s cubic-bezier(0.34,1.2,0.64,1); transform-style: preserve-3d; }
-        .flip-card:hover .flip-card-inner, .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
-        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.10); }
-        .flip-card-back { transform: rotateY(180deg); display: flex; flex-direction: column; justify-content: center; padding: 20px; }
-        .flip-hint { position: absolute; bottom: 8px; right: 12px; font-size: 10px; opacity: 0.5; font-weight: 600; letter-spacing: 0.05em; }
-      `;
-      document.head.appendChild(st);
-    }
+    grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(280px, 1fr))';
+    grid.style.gap = '20px';
 
     const colors = [
       { bg: 'CC0033' }, { bg: '1A3A8F' }, { bg: '1A6B45' },
@@ -2954,29 +2971,21 @@ Thank you,
     team.forEach((m, i) => {
       const col = colors[i % colors.length];
       const initials = (m.name || '?').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-      const wrapper = document.createElement('div');
-      wrapper.className = 'flip-card';
-      wrapper.innerHTML = `
-        <div class="flip-card-inner">
-          <div class="flip-card-front" style="background:#${col.bg};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;">
-            <div style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:white;">${m.emoji || initials}</div>
-            <div style="text-align:center;">
-              <div style="font-size:17px;font-weight:800;color:white;line-height:1.2;">${m.name || ''}</div>
-              <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:4px;font-weight:600;">${m.role || ''}</div>
-            </div>
-            ${m.email ? `<div style="font-size:11px;color:rgba(255,255,255,0.7);">✉️ ${m.email}</div>` : ''}
-            <div class="flip-hint" style="color:rgba(255,255,255,0.5);">hover to flip ↩</div>
+      const card = document.createElement('div');
+      card.style.cssText = `background:white;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);display:flex;flex-direction:column;`;
+      card.innerHTML = `
+        <div style="background:#${col.bg};padding:20px 20px 16px;display:flex;align-items:center;gap:14px;">
+          <div style="width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:white;flex-shrink:0;">${m.emoji || initials}</div>
+          <div>
+            <div style="font-size:16px;font-weight:700;color:white;line-height:1.2;">${m.name || ''}</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.85);margin-top:2px;font-weight:500;">${m.role || ''}</div>
           </div>
-          <div class="flip-card-back" style="background:white;">
-            <div style="font-size:13px;font-weight:800;color:#${col.bg};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">${m.role || ''}</div>
-            <div style="font-size:14px;font-weight:700;color:#1a1a2e;margin-bottom:10px;">${m.name || ''}</div>
-            <p style="font-size:13px;color:#555;line-height:1.65;margin:0;">${m.bio || 'SSS staff member dedicated to helping students succeed.'}</p>
-            ${m.email ? `<a href="mailto:${m.email}" style="display:inline-block;margin-top:12px;font-size:12px;color:#${col.bg};font-weight:700;text-decoration:none;">✉️ ${m.email}</a>` : ''}
-          </div>
+        </div>
+        <div style="padding:16px 20px;flex:1;display:flex;flex-direction:column;gap:8px;">
+          ${m.email ? `<a href="mailto:${m.email}" style="font-size:12px;color:#${col.bg};text-decoration:none;font-weight:600;display:flex;align-items:center;gap:6px;">✉️ ${m.email}</a>` : ''}
+          ${m.bio ? `<p style="font-size:13px;color:#555;line-height:1.6;margin:0;">${m.bio}</p>` : ''}
         </div>`;
-      // Touch support
-      wrapper.addEventListener('click', () => wrapper.classList.toggle('flipped'));
-      grid.appendChild(wrapper);
+      grid.appendChild(card);
     });
   }
 
